@@ -1,4 +1,5 @@
 ---
+import { APP_LOGIN_URL } from "../lib/api";
 import NavbarMobile from "./NavbarMobile.tsx";
 
 const links = [
@@ -29,12 +30,12 @@ const links = [
     </div>
 
     <div class="hidden md:block">
-      <button
-        onclick="if(window.Calendly){window.Calendly.initPopupWidget({url:'https://calendly.com/autoprospect54/call-demo?hide_landing_page_details=1&hide_gdpr_banner=1'});return false;}"
-        class="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-bg transition-colors hover:bg-accent-hover cursor-pointer"
+      <a
+        href={APP_LOGIN_URL}
+        class="inline-block rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-bg transition-colors hover:bg-accent-hover"
       >
         Essai gratuit
-      </button>
+      </a>
     </div>
 
     <!-- Mobile hamburger (React island) -->
