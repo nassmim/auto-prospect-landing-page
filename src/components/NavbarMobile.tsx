@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { APP_LOGIN_URL } from "../lib/api";
 
 type Props = {
   links: { href: string; label: string }[];
@@ -39,12 +40,13 @@ export default function NavbarMobile({ links }: Props) {
                   {link.label}
                 </a>
               ))}
-              <button
-                onClick={() => { setOpen(false); (window as any).Calendly?.initPopupWidget({url:'https://calendly.com/autoprospect54/call-demo?hide_landing_page_details=1&hide_gdpr_banner=1'}); }}
-                className="mt-2 rounded-lg bg-accent px-4 py-3 text-center text-sm font-semibold text-bg transition-colors hover:bg-accent-hover cursor-pointer"
+              <a
+                href={APP_LOGIN_URL}
+                onClick={() => setOpen(false)}
+                className="mt-2 rounded-lg bg-accent px-4 py-3 text-center text-sm font-semibold text-bg transition-colors hover:bg-accent-hover"
               >
                 Essai gratuit
-              </button>
+              </a>
             </div>
           </motion.div>
         )}

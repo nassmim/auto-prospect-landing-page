@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchJSON } from "../lib/api";
+import { APP_LOGIN_URL, fetchJSON } from "../lib/api";
 import type { TPlan } from "../types/plan";
 
 // Bloc prix de la page /tarifs : rendu statique avec les prix fallback
@@ -120,16 +120,12 @@ export default function TarifsPriceBox() {
           : "Sans engagement · Annulable à tout moment"}
       </p>
 
-      <button
-        onClick={() =>
-          (window as any).Calendly?.initPopupWidget({
-            url: "https://calendly.com/autoprospect54/call-demo?hide_landing_page_details=1&hide_gdpr_banner=1",
-          })
-        }
-        className="mt-8 inline-block rounded-xl bg-accent px-8 py-3.5 text-base font-semibold text-[#0A0A0B] shadow-lg shadow-accent/25 transition-all hover:bg-[#D97706] hover:shadow-accent/40 cursor-pointer"
+      <a
+        href={APP_LOGIN_URL}
+        className="mt-8 inline-block rounded-xl bg-accent px-8 py-3.5 text-base font-semibold text-[#0A0A0B] shadow-lg shadow-accent/25 transition-all hover:bg-[#D97706] hover:shadow-accent/40"
       >
         Commencer l'essai gratuit
-      </button>
+      </a>
     </div>
   );
 }

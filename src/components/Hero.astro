@@ -1,4 +1,5 @@
 ---
+import { APP_LOGIN_URL } from "../lib/api";
 ---
 
 <section class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
@@ -27,12 +28,12 @@
     </p>
 
     <div class="fade-up mt-10">
-      <button
-        onclick="if(window.Calendly){window.Calendly.initPopupWidget({url:'https://calendly.com/autoprospect54/call-demo?hide_landing_page_details=1&hide_gdpr_banner=1'});return false;}"
-        class="rounded-xl bg-accent px-8 py-3.5 text-base font-semibold text-bg shadow-lg shadow-accent/25 transition-all hover:bg-accent-hover hover:shadow-accent/40 cursor-pointer"
+      <a
+        href={APP_LOGIN_URL}
+        class="inline-block rounded-xl bg-accent px-8 py-3.5 text-base font-semibold text-bg shadow-lg shadow-accent/25 transition-all hover:bg-accent-hover hover:shadow-accent/40"
       >
-        Réserver une démo gratuite
-      </button>
+        Commencer l'essai gratuit
+      </a>
     </div>
 
     <p class="fade-up mt-6 text-sm text-text-secondary">
