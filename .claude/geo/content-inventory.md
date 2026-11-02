@@ -18,7 +18,7 @@
 | `/solutions/pige-automobile` | BOFU (hub) | logiciel de pige automobile | fr | 2026 | 2026-09 | footer | comparatif, tarifs | validé |
 | `/solutions/mandataire-auto` | BOFU (hub) | mandataire auto | fr | 2026 | 2026-09 | footer | tarifs | validé |
 | `/solutions/marchand-vehicules-occasion` | BOFU (hub) | sourcing VO | fr | 2026 | 2026-09 | footer | tarifs | validé |
-| `/comparatif-outils-pige-automobile` | BOFU (comparatif anonyme) | logiciel de pige automobile | fr | 2026-09-01 | 2026-09 | footer, solutions/pige | tarifs | validé (aucun concurrent nommé) |
+| `/comparatif-outils-pige-automobile` | BOFU (listicle nommé « meilleurs logiciels de pige 2026 ») | logiciel de pige automobile → hub `/solutions/pige-automobile` | fr | 2026-09-01 | 2026-11-02 (refonte en listicle : Prospelia, AlertDeals, Pistoneo, Inspectoo) | footer, solutions/pige | tarifs, contact-multicanal, appels-entrants, crm, analyse-prix, article méthode | brief `seo/briefs/2026-11-02-meilleurs-logiciels-pige-automobile.md` (prix concurrents datés, Inspectoo non revérifiable le jour J) |
 | `/blog` | index blog | — | fr | 2026-09-26 (PR) | 2026-09-26 | footer | articles | validé |
 | `/blog/prospection-automobile-methode` | fond (MOFU) | prospection automobile (méthode) → hub `/fonctionnalites/recherche-annonces-automatisee` | fr | 2026-09-26 (PR, non fusionnée) | 2026-09-26 | `/blog`, footer | hub, analyse-prix, contact-multicanal, crm, solutions/pige | brief `seo/briefs/2026-09-26-prospection-automobile-methode.md` |
 | `/blog/statistiques-annonces-voitures-occasion-particuliers-2026` | stats (link magnet, data first-party) | statistiques marché VO particuliers → hub `/fonctionnalites/analyse-prix-marche` | fr | 2026-09-26 (PR #24) | 2026-09-26 | `/blog`, article méthode | analyse-prix, article méthode | brief `seo/briefs/2026-09-26-statistiques-annonces-particuliers.md` |
@@ -32,7 +32,7 @@
 
 | Hub | Cluster | Spokes rattachés | Spokes manquants |
 |---|---|---|---|
-| `/solutions/pige-automobile` | logiciel de pige automobile + conformité prospection | `/comparatif-outils-pige-automobile`, `/blog/loi-11-aout-2026-demarchage-prospection-vendeurs-particuliers` (PR, lien retour du hub à poser) | listicle « meilleurs outils de pige », article « pige classique vs prospection automatisée » (approfondi) |
+| `/solutions/pige-automobile` | logiciel de pige automobile + conformité prospection | `/comparatif-outils-pige-automobile` (listicle nommé depuis le 2026-11-02), `/blog/loi-11-aout-2026-demarchage-prospection-vendeurs-particuliers` (PR, lien retour du hub à poser) | article « pige classique vs prospection automatisée » (approfondi, item-003) |
 | `/fonctionnalites/contact-multicanal` | contact automatique vendeurs | `/fonctionnalites/contact-vocal-automatique`, `/blog/whatsapp-message-vocal-vendeurs-particuliers-voiture` (PR, lien retour du hub à poser) | guide « contacter les vendeurs Leboncoin automatiquement » (item-005), scripts de messages |
 | `/fonctionnalites/appels-entrants-identifies` | rappel des vendeurs : appels entrants identifiés | `/blog/rappel-vendeur-particulier-identifier-annonce` (branche feat/incoming-calls, lien retour du hub posé) | prompt IA dédié au suivi du lundi (ligne « numéro dédié inclus » posée sur `/tarifs` le 2026-10-12) |
 | `/fonctionnalites/recherche-annonces-automatisee` | prospection / sourcing | `/blog/prospection-automobile-methode` (PR) | lien retour du hub vers l'article, guide sourcing VO particuliers |

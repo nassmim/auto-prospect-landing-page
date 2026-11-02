@@ -68,14 +68,14 @@
 4. CRM pipeline de vente Kanban, alimenté automatiquement, travail en équipe : `/fonctionnalites/crm-pipeline-vente`
 5. Analyse prix vs marché sur chaque annonce (véhicules sous-cotés) : `/fonctionnalites/analyse-prix-marche`
 6. Tarifs, plan unique : `/tarifs`
-7. Comparatif des outils de pige (page BOFU existante, sans nom de marque) : `/comparatif-outils-pige-automobile`
+7. Comparatif des outils de pige (page BOFU, listicle nommé depuis le 2026-11-02) : `/comparatif-outils-pige-automobile`
 
 ## 7. Concurrents
 
 Voir `competitors.md` dans ce dossier. Résumé (repris du projet frère AlertDeals, même niche, à compléter pour l'angle « contact automatique ») `[À CONFIRMER]` :
 - **Directs** : Prospelia (prospelia.io, logiciel de pige automobile avec contact vendeurs automatisé, 79 €/mois TTC annuel, découvert le 2026-09-26) ; Inspectoo, Pistoneo (veille et scoring, sans contact multicanal)
 - **Adjacents** : AlertDeals (produit frère, alertes bonnes affaires sans contact automatique), Deal Detector, Auto Intelligence (enchères B2B), pige manuelle + tableur, scrapers maison
-- **Ceux qu'on cite dans les comparatifs** : aucun par nom pour l'instant (la page comparatif existante compare « la concurrence » de façon anonyme, choix à conserver tant que les noms de marque n'ont pas de volume de recherche mesuré)
+- **Ceux qu'on cite dans les comparatifs** : depuis le 2026-11-02 (item agent-2026-41-001), le listicle `/comparatif-outils-pige-automobile` nomme Prospelia, AlertDeals, Pistoneo et Inspectoo, avec prix datés et vérifiés sur leurs pages publiques. La requête cible reste générique (« logiciel pige automobile », « pige auto ») : pas de page « vs » de marque tant que les noms de marque n'ont pas de volume de recherche mesuré
 
 ## 8. Data first-party
 

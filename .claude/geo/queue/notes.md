@@ -127,3 +127,27 @@ item-005 reste le livrable, agent-2026-42-001 en fixe l'angle et la priorité.
 Réserve de méthode : une seule mesure peut être une variation du moteur. Confirmer la
 régression au cycle du 2026-10-19 avant d'engager la production. Si le prompt redevient
 cité sans rien changer, l'item se ferme sans article.
+
+## 2026-11-02 (item agent-2026-41-001, refonte du comparatif en listicle nommé)
+
+- La page `/comparatif-outils-pige-automobile` est refondue à la même URL en listicle
+  « Les meilleurs logiciels de pige automobile en 2026 » nommant Prospelia, AlertDeals,
+  Pistoneo et Inspectoo. Pas de page « vs » de marque : la requête cible reste générique,
+  conformément à la règle (aucun volume mesuré sur les noms de marque).
+- Prix revérifiés le jour de la production sur les pages publiques : Prospelia
+  (79 €/mois TTC annuel, 99 €/mois sans engagement, canaux SMS + vocal confirmés) et
+  Pistoneo (79 €/mois TTC ou 799 €/an TTC) à jour du 2026-11-02. Inspectoo :
+  inspectoo.fr injoignable le 2026-11-02 (connexion refusée) alors que l'extension
+  Firefox a été mise à jour le 2026-10-30 ; le prix publié est daté « constaté en
+  septembre 2026 » dans le texte. AlertDeals : les montants ne sont pas dans le HTML
+  statique de alertdeals.fr (rendu client ?), la page dit seulement « mensuel ou annuel,
+  40 % de réduction en annuel » ; aucun montant publié dans l'article.
+- Toute affirmation négative sur un concurrent est formulée « non annoncé sur sa page »
+  plutôt que « n'existe pas », et la date de relevé est visible sur la page (phrase sous
+  le tableau et note sous la FAQ). Convention à réutiliser pour tout contenu nommé.
+- JSON-LD du listicle : `ItemList` de `SoftwareApplication` (sans `offers` pour les
+  concurrents, leurs prix bougent), plus `FAQPage` et `BreadcrumbList`. Pas de
+  `BlogPosting` : la page n'est pas un article de blog, pas d'entrée dans
+  `src/data/articles.ts` ; `llms.txt` a sa ligne sous « Pages principales ».
+- Liens sortants vers les concurrents en `rel="nofollow noopener noreferrer"`, sauf
+  AlertDeals (produit frère, follow assumé, lien de la suite).
