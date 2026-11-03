@@ -1,0 +1,9 @@
+{
+  "plafond_partage_usd": 10.0,
+  "plafond_usd_par_semaine": 5.0,
+  "note": "Plafond repris de la configuration AlertDeals (fixé par Nassim le 2026-09-20 pour l'org treg one-month-ship, partagée entre les deux projets). Solde réel constaté le 2026-09-26 : $10.59. Attention : le top-up automatique du compte est activé (+$20 dès que le solde passe sous $5) ; le plafond ci-dessus est donc la seule vraie limite de dépense. Vérifier `treg balance` avant toute annonce de dépense.",
+  "solde_constate_le": "2026-09-26",
+  "solde_constate_usd": 10.59,
+  "organisation": "one-month-ship",
+  "org": "one-month-ship"
+}

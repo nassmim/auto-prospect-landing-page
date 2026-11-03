@@ -1,0 +1,63 @@
+{
+  "niche": "logiciels de prospection et de pige automobile pour marchands VO, revendeurs et mandataires auto en France",
+  "concurrents": [
+    {
+      "name": "Prospelia",
+      "url": "https://prospelia.io/",
+      "pages": {
+        "accueil": "https://prospelia.io/",
+        "tarifs": "https://prospelia.io/",
+        "actualites": ""
+      },
+      "reviews": {
+        "trustpilot_url": "",
+        "app_store": null,
+        "product_hunt_url": ""
+      },
+      "note": "Concurrent direct découvert le 2026-09-26 (résultat de recherche sur « prospection automobile ») : logiciel de prospection automobile qui agrège Leboncoin, La Centrale, ParuVendu et AutoScout24. Pages tarifs/actualités à préciser après première collecte."
+    },
+    {
+      "name": "Inspectoo",
+      "url": "https://inspectoo.fr/",
+      "pages": {
+        "accueil": "https://inspectoo.fr/",
+        "tarifs": "https://inspectoo.fr/tarifs",
+        "actualites": ""
+      },
+      "reviews": {
+        "trustpilot_url": "",
+        "app_store": null,
+        "product_hunt_url": ""
+      },
+      "note": "Site injoignable depuis notre environnement côté AlertDeals (restriction géo/anti-bot), données manuelles dans .claude/geo/competitors.md. Ne pas écraser sans nouvelle vérification."
+    },
+    {
+      "name": "Pistoneo",
+      "url": "https://pistoneo.com/",
+      "pages": {
+        "accueil": "https://pistoneo.com/",
+        "tarifs": "https://pistoneo.com/#tarifs",
+        "actualites": ""
+      },
+      "reviews": {
+        "trustpilot_url": "",
+        "app_store": null,
+        "product_hunt_url": ""
+      }
+    },
+    {
+      "name": "Deal Detector",
+      "url": "https://dealdetector.fr/",
+      "pages": {
+        "accueil": "https://dealdetector.fr/",
+        "tarifs": "https://dealdetector.fr/#tarifs",
+        "actualites": ""
+      },
+      "reviews": {
+        "trustpilot_url": "",
+        "app_store": null,
+        "product_hunt_url": ""
+      }
+    }
+  ]
+}
