@@ -1,0 +1,175 @@
+{
+  "mode": "volume",
+  "planification": {
+    "actif": false
+  },
+  "niche": "logiciel de prospection automobile automatisée (détection d'annonces, contact automatique des vendeurs particuliers, CRM) pour marchands VO, revendeurs et mandataires auto",
+  "subreddits": [
+    "france"
+  ],
+  "search_terms": [
+    "achat revente voiture occasion",
+    "marchand automobile problème",
+    "sourcing véhicule occasion",
+    "pige automobile leboncoin",
+    "contacter vendeurs leboncoin"
+  ],
+  "max_reddit_results_per_term": 50,
+  "max_reddit_threads_per_term": 10,
+  "icp": {
+    "description": "Marchand de véhicules d'occasion indépendant, revendeur, gérant d'agence de dépôt-vente ou mandataire auto en France, qui source auprès des particuliers sur Leboncoin/AutoScout24/La Centrale et contacte les vendeurs à la main.",
+    "roles": [
+      "marchand automobile",
+      "négociant auto",
+      "gérant dépôt-vente",
+      "revendeur véhicules occasion",
+      "mandataire auto",
+      "courtier automobile"
+    ],
+    "disqualifiants": [
+      "recruiter",
+      "student",
+      "sales development",
+      "growth agency",
+      "particulier non professionnel",
+      "concessionnaire",
+      "concession automobile",
+      "dealer réseau constructeur"
+    ],
+    "segments": {
+      "marchands": [
+        "marchand automobile",
+        "négociant auto",
+        "revendeur véhicules occasion"
+      ],
+      "depot_vente": [
+        "gérant dépôt-vente",
+        "agence dépôt-vente"
+      ],
+      "mandataires": [
+        "mandataire auto",
+        "courtier automobile"
+      ]
+    }
+  },
+  "linkedin": {
+    "actif": false,
+    "search_terms": [
+      "marchand automobile France",
+      "achat revente véhicule occasion",
+      "dépôt-vente automobile"
+    ],
+    "periode": "last-month",
+    "pages_par_terme": 2,
+    "max_commentaires_par_post": 20
+  },
+  "instagram": {
+    "actif": false,
+    "comptes": [
+      "tomautofr",
+      "flo.vma",
+      "ge_supercars",
+      "marv__20",
+      "marco.lh7",
+      "marchand.elite"
+    ],
+    "sujets": [
+      "achat revente voiture",
+      "marchand automobile",
+      "devenir marchand auto",
+      "pige auto"
+    ],
+    "max_posts_par_compte": 6,
+    "max_commentaires_par_post": 30
+  },
+  "tiktok": {
+    "actif": false,
+    "comptes": [
+      "marchand.elite",
+      "marv__.20",
+      "drive.car.95"
+    ],
+    "sujets": [
+      "achat revente voiture",
+      "marchand automobile",
+      "devenir marchand auto",
+      "pige auto"
+    ],
+    "max_videos_par_compte": 6,
+    "max_commentaires_par_video": 30
+  },
+  "treg": {
+    "actif": true,
+    "budget_usd_par_semaine": 3.0,
+    "max_route_cost_usd": 0.05,
+    "max_enrichissements": 60,
+    "trouver_email": false,
+    "signaux": {
+      "emplois": true,
+      "titres": [
+        "marchand",
+        "négociant",
+        "dépôt-vente",
+        "mandataire"
+      ],
+      "jours": 60
+    }
+  },
+  "quotas": {
+    "fr": 100
+  },
+  "concurrents_noms": [
+    "Prospelia",
+    "Inspectoo",
+    "Pistoneo",
+    "Deal Detector"
+  ],
+  "concurrents_region": "FR",
+  "concurrents_linkedin": [],
+  "volume": {
+    "sujets": [
+      "achat revente voiture",
+      "marchand automobile",
+      "devenir marchand auto",
+      "pige automobile",
+      "sourcing véhicule occasion",
+      "prospection automobile"
+    ],
+    "seuil_sujet": 1,
+    "max_posts_par_concurrent": 10,
+    "max_commentaires_par_post": 50,
+    "jours": 45,
+    "relire_apres_jours": 30,
+    "reactions": true,
+    "pages_reactions_par_post": 2,
+    "verification_profils": 200,
+    "parallelisme": 8,
+    "max_resolutions_email": 0,
+    "retours_minimum": 10,
+    "recherche_mots_cles": false
+  },
+  "systeme": {
+    "messages": [
+      "prospection/messages/*.md"
+    ],
+    "lead_magnets": [
+      "prospection/lead-magnets/*.md"
+    ],
+    "contacts_existants": [
+      "prospection/exports/*.csv"
+    ],
+    "api": {
+      "url": "",
+      "cle_env": "PROSPECTION_API_TOKEN",
+      "entete": "Authorization",
+      "format": "Bearer {jeton}"
+    },
+    "entonnoir": [
+      "prospection/entonnoir/*.csv"
+    ],
+    "retours": [
+      "prospection/retours/*.csv"
+    ]
+  },
+  "_note": "2026-09-26 : Nassim a désactivé les trois réseaux (mode volume inutilisable : pseudos sans email, pas de retargeting possible). Agent Prospects en pause ; réactiver un réseau avec 'actif': true et choisir le mode avant tout lancement."
+}

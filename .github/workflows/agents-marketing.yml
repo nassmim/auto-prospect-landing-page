@@ -1,0 +1,122 @@
+name: agents-marketing
+
+# Les 3 routines marketing de Auto-Prospect, sans Mac ni application ouverts.
+# Horaires en UTC. Secrets attendus : ANTHROPIC_API_KEY, TREG_TOKEN, PACK_TOKEN.
+on:
+  schedule:
+    - cron: "0 8 * * 0"
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      agent:
+        description: "Agent à lancer"
+        type: choice
+        options: [article, mesure, autorite]
+        default: mesure
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: agents-marketing-${{ github.ref }}-${{ github.event.schedule || inputs.agent }}
+  cancel-in-progress: false
+
+env:
+  PACK_REPO: nassmim/agents-claude-marketing
+  # Version du pack utilisée par CE projet : on ne la change que volontairement.
+  PACK_REF: dfb25b79222c09559baa7b033a783c85569af1c4
+  CLAUDE_CODE_VERSION: "2.1.302"
+  TREG_VERSION: "0.20.0"
+
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: .
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        agent: ${{ fromJSON(github.event_name == 'workflow_dispatch' && format('["{0}"]', inputs.agent) || (github.event.schedule == '0 8 * * 0' && '["article"]' || '["mesure","autorite"]')) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Récupérer le pack des agents (dépôt privé)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PACK_REPO }}
+          token: ${{ secrets.PACK_TOKEN }}
+          path: _pack
+          ref: ${{ env.PACK_REF }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4
+        if: matrix.agent == 'article'
+        with:
+          version: 10
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Installer Claude Code, treg et les agents
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "_pack/" >> "$(git rev-parse --git-dir)/info/exclude"
+          npm install -g "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}"
+          uv tool install --python 3.12 "tools-registry[proxy]==${TREG_VERSION}"
+          mkdir -p "$HOME/.claude/skills"
+          for a in agent-seo-geo agent-autorite agent-concurrents agent-prospects; do
+            cp -R "$GITHUB_WORKSPACE/_pack/$a" "$HOME/.claude/skills/$a"
+          done
+          claude plugin marketplace add "$GITHUB_WORKSPACE/_pack"
+          claude plugin install protocole@yannis-plugins --scope user
+          claude plugin install geo-engine@yannis-plugins --scope user
+          mkdir -p .protocole
+          cp "$GITHUB_WORKSPACE"/.github/agents/protocole/*.json .protocole/
+          git config user.name "Auto-Prospect agents"
+          git config user.email "agents@auto-prospect.fr"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Dépendances du site (article uniquement)
+        if: matrix.agent == 'article'
+        run: pnpm install --frozen-lockfile
+
+      - name: Lancer l'agent ${{ matrix.agent }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TREG_TOKEN: ${{ secrets.TREG_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          claude -p "$(cat "$GITHUB_WORKSPACE/.github/agents/prompts/${{ matrix.agent }}.md")" \
+            --permission-mode bypassPermissions \
+            --disallowedTools "Bash(gh pr merge:*)" "Bash(git push --force:*)" "Bash(git push origin main:*)" \
+            --max-turns 150 \
+            --output-format text | tee "$RUNNER_TEMP/rapport-${{ matrix.agent }}.md"
+
+      - name: Rapport dans le résumé du run
+        if: always()
+        run: |
+          f="$RUNNER_TEMP/rapport-${{ matrix.agent }}.md"
+          [ -f "$f" ] && cat "$f" >> "$GITHUB_STEP_SUMMARY" || echo "Pas de rapport produit." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Sorties de l'agent en pièce jointe (jamais committées)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sorties-${{ matrix.agent }}
+          path: |
+            seo/
+            autorite/
+            concurrents/
+            .claude/geo/brief-*.md
+            ${{ runner.temp }}/rapport-${{ matrix.agent }}.md
+          if-no-files-found: ignore
+          retention-days: 60

@@ -1,0 +1,107 @@
+{
+  "treg": {
+    "org": "one-month-ship"
+  },
+  "domaines": [
+    {
+      "url": "https://auto-prospect.fr",
+      "sitemap": "https://auto-prospect.fr/sitemap-index.xml",
+      "locales": [
+        "fr"
+      ],
+      "search_console": "sc-domain:auto-prospect.fr"
+    }
+  ],
+  "produit": {
+    "nom": "Auto-Prospect",
+    "url_inscription": "https://app.auto-prospect.fr/login",
+    "cible": "marchands et revendeurs de véhicules d'occasion, mandataires auto en France, qui sourcent auprès des particuliers sur Leboncoin, AutoScout24 et La Centrale"
+  },
+  "niche": {
+    "mots_cles": [
+      "pige auto",
+      "logiciel pige automobile",
+      "prospection automobile",
+      "prospection automatique",
+      "crm automobile",
+      "sourcing vo",
+      "sourcing auto",
+      "marchand automobile",
+      "achat revente voiture"
+    ],
+    "langues": [
+      "fr"
+    ],
+    "prompts_ia": [
+      "Quel est le meilleur logiciel de pige automobile pour un marchand VO ?",
+      "Comment contacter automatiquement les vendeurs de voitures sur Leboncoin ?",
+      "Comment trouver des véhicules d'occasion sous-cotés à revendre ?",
+      "Existe-t-il un outil qui envoie des messages WhatsApp ou vocaux aux vendeurs particuliers de voitures ?",
+      "Quel CRM utiliser pour suivre ses achats de véhicules d'occasion ?",
+      "Existe-t-il un outil qui me dit pour quelle annonce un vendeur me rappelle ?"
+    ]
+  },
+  "concurrents": [
+    {
+      "domaine": "prospelia.io",
+      "nom": "Prospelia"
+    },
+    {
+      "domaine": "inspectoo.fr",
+      "nom": "Inspectoo"
+    },
+    {
+      "domaine": "pistoneo.com",
+      "nom": "Pistoneo"
+    },
+    {
+      "domaine": "alertdeals.fr",
+      "nom": "AlertDeals (produit frère)"
+    }
+  ],
+  "geo": {
+    "profil": ".claude/geo/profile.md",
+    "file": ".claude/geo/queue",
+    "inventaire": ".claude/geo/content-inventory.md",
+    "dossier_contenu": "src/pages/blog",
+    "cadence_par_semaine": 1,
+    "publication_automatique": false,
+    "branche_prefixe": "geo/",
+    "prefixes_articles": [
+      "/blog"
+    ],
+    "branche_production": "main",
+    "extensions_contenu": [
+      ".astro"
+    ],
+    "cle_date": "datePublished",
+    "locales_attendues": 1
+  },
+  "seuils": {
+    "budget_treg_usd_par_semaine": 0.5,
+    "prompts_ia_par_semaine": 10,
+    "inspections_par_semaine": 10,
+    "idees_par_semaine": 20,
+    "impressions_min_requete": 30,
+    "semaines_avant_bilan": 4,
+    "semaines_sans_impressions": 6,
+    "jours_pr_en_attente": 7,
+    "audit_urls_max": 300,
+    "reserve_jours_alerte": 7,
+    "points_de_mesure_jours": [
+      7,
+      14,
+      28
+    ]
+  },
+  "exclusions": {
+    "urls": [
+      "/conditions-utilisation",
+      "/confidentialite",
+      "/cookies"
+    ],
+    "sujets": [
+      "mandataire auto (requête grand public 27 100/mois, difficulté 69, hors cible)"
+    ]
+  }
+}

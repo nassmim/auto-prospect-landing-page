@@ -1,0 +1,83 @@
+{
+  "domaines": [
+    {
+      "url": "https://auto-prospect.fr",
+      "sitemap": "https://auto-prospect.fr/sitemap-index.xml",
+      "locales": [
+        "fr"
+      ],
+      "search_console": "sc-domain:auto-prospect.fr",
+      "indexnow_key": ""
+    }
+  ],
+  "produit": {
+    "nom": "Auto-Prospect",
+    "tagline": {
+      "fr": "Automatisez votre prospection auto et gagnez 3x plus de deals"
+    },
+    "description_courte": {
+      "fr": "Auto-Prospect détecte en temps réel les annonces de véhicules de particuliers sur Leboncoin, AutoScout24 et La Centrale, analyse leur prix par rapport au marché, contacte automatiquement les vendeurs (messagerie Leboncoin, WhatsApp ou vocal) et alimente un CRM Kanban intégré."
+    },
+    "description_longue": {
+      "fr": "Auto-Prospect est un outil SaaS français de prospection automobile automatisée pour les professionnels de l'achat-revente (marchands VO, mandataires). Il détecte les annonces de particuliers sur Leboncoin, AutoScout24 et La Centrale, analyse leur prix par rapport au marché, contacte les vendeurs par messagerie Leboncoin, WhatsApp ou message vocal, et intègre un CRM Kanban. Prospects exclusifs. 69 € HT/mois en annuel, 89 € HT/mois sans engagement, essai gratuit 5 jours."
+    },
+    "categorie": "prospection automobile automatisée, logiciel de pige auto, CRM automobile",
+    "logo": "https://auto-prospect.fr/logo.svg",
+    "captures": [],
+    "prix": "69 € HT/mois en facturation annuelle, ou 89 € HT/mois sans engagement, essai gratuit 5 jours",
+    "date_lancement": "2025",
+    "email_contact": "contact@auto-prospect.fr"
+  },
+  "niche": {
+    "mots_cles": [
+      "logiciel de pige automobile",
+      "outil de pige automobile",
+      "prospection automobile",
+      "logiciel prospection automobile",
+      "crm automobile",
+      "sourcing vo",
+      "marchand automobile",
+      "achat revente voiture"
+    ],
+    "langues": [
+      "fr"
+    ]
+  },
+  "concurrents": [
+    "prospelia.io",
+    "inspectoo.fr",
+    "pistoneo.com"
+  ],
+  "expert": {
+    "nom": "L'équipe Auto-Prospect",
+    "bio": "L'équipe d'Auto-Prospect, outil de prospection automobile automatisée utilisé par des marchands VO et mandataires auto en France.",
+    "sujets": [
+      "prospection automobile",
+      "sourcing de véhicules d'occasion auprès des particuliers",
+      "contact automatisé des vendeurs",
+      "CRM pour revendeurs auto"
+    ],
+    "url_profil": ""
+  },
+  "actifs_citables": [
+    "https://auto-prospect.fr/blog/prospection-automobile-methode",
+    "https://auto-prospect.fr/comparatif-outils-pige-automobile"
+  ],
+  "seuils": {
+    "dr_min": 30,
+    "actions_par_semaine": 10,
+    "budget_treg_usd_par_semaine": 0.5,
+    "verifications_annuaires_par_semaine": 10,
+    "requetes_serp_par_semaine": 6,
+    "domaines_referents_par_concurrent": 100,
+    "mots_cles_par_domaine": 50,
+    "pr_awesome_par_semaine": 3,
+    "etoiles_min_awesome": 50,
+    "gap_rafraichissement_jours": 28
+  },
+  "mode_assiste": false,
+  "exclusions": {
+    "annuaires": [],
+    "domaines_refuses": []
+  }
+}
