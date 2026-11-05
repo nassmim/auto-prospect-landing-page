@@ -22,10 +22,10 @@
 
 ## 2. Proposition de valeur
 
-- **En une phrase** : Auto-Prospect détecte en temps réel les annonces de véhicules de particuliers sur Leboncoin, AutoScout24 et La Centrale, analyse leur prix par rapport au marché, contacte automatiquement les vendeurs (messagerie Leboncoin, WhatsApp ou vocal sur répondeur) et alimente un CRM Kanban intégré, avec des prospects exclusifs à chaque client.
+- **En une phrase** : Auto-Prospect détecte les annonces de véhicules de particuliers sur Leboncoin, AutoScout24 et La Centrale, analyse leur prix par rapport au marché, contacte automatiquement les vendeurs (messagerie Leboncoin, WhatsApp ou vocal sur répondeur) et alimente un CRM Kanban intégré, avec des prospects exclusifs à chaque client.
 - **H1 réel de la page d'accueil** : « Automatisez votre prospection auto et gagnez 3x plus de deals »
 - **Sous-titre réel** : « Trouvez les meilleures annonces sur Leboncoin, AutoScout24 et La Centrale, contactez les vendeurs automatiquement — messagerie Leboncoin, WhatsApp ou vocal — et gérez vos prospects depuis une seule plateforme. »
-- **Meta description réelle** : « Automatisez votre prospection auto : détection d'annonces en temps réel, contact automatique des vendeurs par messagerie Leboncoin, WhatsApp ou vocal, CRM intégré. Déjà 273 professionnels gagnent 3x plus de deals sur Leboncoin, AutoScout24 et La Centrale. »
+- **Meta description réelle** : « Automatisez votre prospection auto : détection automatique des annonces, contact automatique des vendeurs par messagerie Leboncoin, WhatsApp ou vocal, CRM intégré. Déjà 273 professionnels gagnent 3x plus de deals sur Leboncoin, AutoScout24 et La Centrale. »
 
 ## 3. Niche et vocabulaire
 
@@ -48,7 +48,7 @@
 
 ### Personas secondaires
 - **Mandataire auto** : une recherche automatique par mandat client, livrer les mandats plus vite (`/solutions/mandataire-auto`)
-- **Gérant de concession / agence multi-vendeurs** : travail en équipe dans le CRM, alimentation du parc en continu (`/solutions/marchand-vehicules-occasion`)
+- **Gérant de concession / agence multi-vendeurs** : travail en équipe dans le CRM, alimentation du parc (`/solutions/marchand-vehicules-occasion`)
 - **Utilisateur d'un outil de pige classique** insatisfait des prospects partagés et des zones facturées en plus (`/solutions/pige-automobile`)
 
 ## 5. Jobs-to-be-done
@@ -61,13 +61,13 @@
 
 ## 6. Fonctionnalités clés
 
-1. Recherche automatique d'annonces en temps réel (3 marketplaces, filtres marque/modèle/prix/km/zone, zones illimitées) : `/fonctionnalites/recherche-annonces-automatisee`
+1. Recherche automatique d'annonces (3 marketplaces, filtres marque/modèle/prix/km/zone, zones illimitées) : `/fonctionnalites/recherche-annonces-automatisee`
 2. Contact multicanal des vendeurs (messagerie Leboncoin, WhatsApp, vocal sur répondeur) : `/fonctionnalites/contact-multicanal`
 3. Contact vocal automatique, templates réutilisables, exclusivité des prospects : `/fonctionnalites/contact-vocal-automatique`
 3 bis. **Appels entrants identifiés** (feature le plus différenciant, ajouté le 2026-10-12) : un numéro Auto-Prospect dédié par compte, que les vendeurs rappellent ; l'appel est transféré sur la ligne du client qui entend l'annonce avant de décrocher (« Appel Auto-Prospect. Peugeot 208 2019, 9 900 euros, Lyon. »), l'appel s'affiche dans le CRM avec l'annonce (même manqué) et son issue est notée sur le prospect : `/fonctionnalites/appels-entrants-identifies`. Vocabulaire publié : « appels entrants identifiés », « annonce vocale avant de décrocher », « quand un vendeur vous rappelle » ; jamais « whisper » ni le nom de l'opérateur (§ 15). **Ne jamais parler d'un « numéro Auto-Prospect », d'un numéro dédié ou attribué** (demande de Nassim, 2026-10-12) : du point de vue du client c'est simplement « votre numéro », il n'a pas à savoir qu'un numéro lui est assigné. Mis en avant sur la home (section « Nouveau » après « Comment ça marche », carte dans la grille Fonctionnalités, étape 3, FAQ). Fonctionnalité **incluse dans l'abonnement** (tranché par Nassim le 2026-10-12, ligne « Appels entrants identifiés » sur `/tarifs`). En interne, un numéro est attribué à chaque compte et écrit dans le texte des messages : ne jamais parler de « numéro d'appelant » ni de cette mécanique dans un contenu marketing, dire seulement « vos messages donnent aux vendeurs votre numéro à rappeler »
 4. CRM pipeline de vente Kanban, alimenté automatiquement, travail en équipe : `/fonctionnalites/crm-pipeline-vente`
 5. Analyse prix vs marché sur chaque annonce (véhicules sous-cotés) : `/fonctionnalites/analyse-prix-marche`
-**Règle absolue (Nassim, 2026-11-05) : la détection des annonces est quotidienne, jamais « en temps réel » ni « en continu ».** Ne jamais écrire « temps réel » dans un contenu ni dans une réponse d'annuaire ; dire « chaque jour » ou « quotidiennement ». Le site contient encore d'anciennes mentions à corriger.
+**Règle absolue (Nassim, 2026-11-05) : ne jamais affirmer que la détection est « en temps réel », « instantanée » ou « en continu », ni « 24h/24 » : c'est faux (la détection est quotidienne) et la cible ne cherche pas du temps réel.** Ne pas mettre en avant la fréquence de détection : dire « détection automatique ». Seul le tableau de `/solutions/pige-automobile` dit « quotidiennement », sur demande de Nassim. Ne jamais écrire « temps réel » ni dans un contenu ni dans une réponse d'annuaire.
 5 bis. **Pépites** (ajouté le 2026-11-05, demande de Nassim) : Auto-Prospect calcule un score pour chaque annonce et informe l'utilisateur des pépites, ces annonces qui ressortent du lot. Vocabulaire publié : « pépites », « score de chaque annonce ». Ne jamais décrire comment le score est calculé ni sur quels champs (§ 15, moteur d'analyse de prix). Pas de page dédiée à ce jour : l'évoquer dans les contenus où la détection et le tri des annonces sont le sujet, avec un lien vers `/fonctionnalites/analyse-prix-marche`. Mise en avant dans le comparatif `/comparatif-outils-pige-automobile`, avec les appels entrants identifiés (3 bis), à reprendre chaque fois qu'on compare Auto-Prospect à un autre outil.
 6. Tarifs, plan unique : `/tarifs`
 7. ~~Comparatif des outils de pige~~ : page supprimée le 2026-11-05, ne pas la recréer. Décision de Nassim du 2026-11-05 : la page comparatif est supprimée (redirigée en 301 vers `/solutions/pige-automobile`). Comparer son produit à des acteurs peu connus leur fait de la publicité sans rien rapporter. **Ne pas recréer de page comparative ni de listicle nommant des concurrents** tant que Nassim ne l'a pas demandé, et ne jamais pointer vers l'ancienne URL.
