@@ -9,7 +9,7 @@ Légende : ⬜ à faire · 🔄 en cours · ✅ fait · ⏸️ en attente de Nas
 ## Avant de commencer
 - ✅ Claude Code ouvert dans le dossier du site public (pas l'app)
 - ✅ Dépôt propre, sur `main`
-
+ 
 ## Étape 1 — SEO/GEO et Autorité
 - ✅ 1a. Onboarding `geo-engine:geo` → `.claude/geo/` (profil, concurrents, mots-clés). Reste des `[À CONFIRMER]` dans `profile.md` (voir décisions en attente)
 - ✅ 1b. `agent-seo-geo` : treg connecté (solde 10,59 $, org one-month-ship, top-up auto activé), Search Console `sc-domain:auto-prospect.fr` OK, volumes Serpstat (0,007 $), premier article « prospection automobile » → PR #24 https://github.com/one-month-ship/auto-prospect-landing-page/pull/24 (à relire et fusionner par Nassim)
