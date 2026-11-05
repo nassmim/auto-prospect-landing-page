@@ -9,7 +9,7 @@ import "../styles/global.css";
 
 const title = "Meilleurs logiciels de pige automobile en 2026 : comparatif | Auto-Prospect";
 const description =
-  "Comparatif 2026 des logiciels de pige auto : Auto-Prospect, Prospelia, AlertDeals, Pistoneo, Inspectoo. Contact des vendeurs, exclusivité, CRM et prix vérifiés.";
+  "Comparatif 2026 des logiciels de pige auto : contact des vendeurs, appels entrants identifiés, pépites, exclusivité, CRM et prix vérifiés pour 5 outils.";
 
 const siteOrigin = Astro.site?.origin ?? "https://auto-prospect.fr";
 const canonical = `${siteOrigin}/comparatif-outils-pige-automobile/`;
@@ -50,6 +50,14 @@ const faq = [
       "payants proposent une période d'essai : 5 jours gratuits chez Auto-Prospect, essai gratuit annoncé chez Pistoneo et AlertDeals.",
   },
   {
+    q: "Comment savoir quel vendeur me rappelle, et quelles annonces valent le coup ?",
+    a:
+      "Avec Auto-Prospect, quand un propriétaire rappelle, le véhicule concerné est annoncé avant que vous ne décrochiez, et l'appel, même manqué, s'inscrit dans le " +
+      "CRM sur la fiche du prospect avec l'annonce et son issue. Pour le tri, chaque annonce reçoit un score et vous êtes informé des pépites, ces annonces qui " +
+      "ressortent du lot, sans avoir à parcourir tous les résultats à la main. Parmi les autres outils comparés, Prospelia annonce un score par annonce, mais " +
+      "aucun n'annonce, dans ses pages publiques relevées le " + dateVerification + ", l'identification des rappels des vendeurs.",
+  },
+  {
     q: "Combien coûte un logiciel de pige automobile en 2026 ?",
     a:
       "De 20 € à 100 € par mois environ, selon la profondeur de l'outil. L'analyse à l'annonce par extension (Inspectoo) se situe autour de 20 € par mois ; la veille " +
@@ -70,7 +78,7 @@ const outilsJsonLd = [
     url: `${siteOrigin}/`,
     resume:
       "Logiciel de prospection automobile : détection en temps réel sur Leboncoin, AutoScout24 et La Centrale, contact automatique des vendeurs par messagerie Leboncoin, " +
-      "WhatsApp et message vocal, prospects exclusifs, CRM Kanban intégré.",
+      "WhatsApp et message vocal, appels entrants identifiés, score de chaque annonce et pépites signalées, prospects exclusifs, CRM Kanban intégré.",
   },
   {
     nom: "Prospelia",
@@ -173,11 +181,13 @@ const jsonLd = [
       <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <h2 class="text-2xl font-bold sm:text-3xl">Comment nous avons comparé</h2>
         <p class="mt-4 leading-relaxed text-text-secondary">
-          Quatre questions départagent les outils de pige : <strong class="text-text">quels sites sont surveillés</strong> (une
+          Six questions départagent les outils de pige : <strong class="text-text">quels sites sont surveillés</strong> (une
           annonce non détectée est une affaire perdue), <strong class="text-text">comment les vendeurs sont contactés</strong>
-          (un canal que le vendeur ne lit pas ne sert à rien), <strong class="text-text">qui d'autre reçoit les mêmes
-          annonces</strong> (la sur-sollicitation détruit le taux de réponse), et
-          <strong class="text-text">ce que coûte réellement l'outil</strong> une fois les zones et options ajoutées.
+          (un canal que le vendeur ne lit pas ne sert à rien), <strong class="text-text">les rappels des vendeurs sont-ils
+          identifiés</strong> (un appel dont on ignore l'annonce est une négociation mal engagée),
+          <strong class="text-text">les bonnes affaires sont-elles signalées</strong> (un score par annonce évite de trier à la
+          main), <strong class="text-text">qui d'autre reçoit les mêmes annonces</strong> (la sur-sollicitation détruit le taux de
+          réponse), et <strong class="text-text">ce que coûte réellement l'outil</strong> une fois les zones et options ajoutées.
         </p>
         <p class="mt-4 leading-relaxed text-text-secondary">
           Transparence : ce comparatif est édité par Auto-Prospect, et AlertDeals est développé par la même équipe. Les
@@ -198,6 +208,8 @@ const jsonLd = [
                 <th class="py-4 pr-4 font-medium">Outil</th>
                 <th class="py-4 pr-4 font-medium">Contact vendeur automatique</th>
                 <th class="py-4 pr-4 font-medium">Sites surveillés</th>
+                <th class="py-4 pr-4 font-medium">Rappels des vendeurs identifiés</th>
+                <th class="py-4 pr-4 font-medium">Score et pépites</th>
                 <th class="py-4 pr-4 font-medium">Prospects exclusifs</th>
                 <th class="py-4 pr-4 font-medium">CRM</th>
                 <th class="py-4 font-medium">Prix constaté</th>
@@ -206,8 +218,10 @@ const jsonLd = [
             <tbody class="divide-y divide-border">
               <tr>
                 <td class="py-4 pr-4 font-semibold">Auto-Prospect</td>
-                <td class="py-4 pr-4">Messagerie Leboncoin, WhatsApp, vocal ; rappels des vendeurs identifiés</td>
+                <td class="py-4 pr-4">Messagerie Leboncoin, WhatsApp, vocal</td>
                 <td class="py-4 pr-4">Leboncoin, AutoScout24, La Centrale</td>
+                <td class="py-4 pr-4">Oui : annonce du véhicule avant de décrocher, appel dans le CRM</td>
+                <td class="py-4 pr-4">Score de chaque annonce, pépites signalées</td>
                 <td class="py-4 pr-4">Oui</td>
                 <td class="py-4 pr-4">Kanban intégré</td>
                 <td class="py-4">69 € HT/mois en annuel, 89 € HT sans engagement</td>
@@ -217,6 +231,8 @@ const jsonLd = [
                 <td class="py-4 pr-4 text-text-secondary">SMS et message vocal, relances automatiques</td>
                 <td class="py-4 pr-4 text-text-secondary">Leboncoin, La Centrale, ParuVendu, AutoScout24</td>
                 <td class="py-4 pr-4 text-text-secondary">Non annoncé</td>
+                <td class="py-4 pr-4 text-text-secondary">Score par annonce annoncé</td>
+                <td class="py-4 pr-4 text-text-secondary">Non annoncé</td>
                 <td class="py-4 pr-4 text-text-secondary">Pipeline intégré</td>
                 <td class="py-4 text-text-secondary">79 €/mois TTC en annuel, 99 €/mois sans engagement</td>
               </tr>
@@ -224,6 +240,8 @@ const jsonLd = [
                 <td class="py-4 pr-4 font-medium text-text-secondary">AlertDeals</td>
                 <td class="py-4 pr-4 text-text-secondary">Non : alertes, contact en un clic</td>
                 <td class="py-4 pr-4 text-text-secondary">Leboncoin, AutoScout24, La Centrale</td>
+                <td class="py-4 pr-4 text-text-secondary">Sans objet (pas de contact automatique)</td>
+                <td class="py-4 pr-4 text-text-secondary">Alertes bonnes affaires, estimation de marge</td>
                 <td class="py-4 pr-4 text-text-secondary">Sans objet (veille)</td>
                 <td class="py-4 pr-4 text-text-secondary">Non</td>
                 <td class="py-4 text-text-secondary">Mensuel ou annuel (40 % de réduction en annuel)</td>
@@ -233,6 +251,8 @@ const jsonLd = [
                 <td class="py-4 pr-4 text-text-secondary">Non : contact en un clic</td>
                 <td class="py-4 pr-4 text-text-secondary">9 marketplaces en Europe, dont Leboncoin et La Centrale</td>
                 <td class="py-4 pr-4 text-text-secondary">Sans objet (veille)</td>
+                <td class="py-4 pr-4 text-text-secondary">Marge et coûts d'import calculés</td>
+                <td class="py-4 pr-4 text-text-secondary">Sans objet (veille)</td>
                 <td class="py-4 pr-4 text-text-secondary">Non annoncé</td>
                 <td class="py-4 text-text-secondary">79 €/mois TTC, ou 799 €/an TTC</td>
               </tr>
@@ -240,6 +260,8 @@ const jsonLd = [
                 <td class="py-4 pr-4 font-medium text-text-secondary">Inspectoo</td>
                 <td class="py-4 pr-4 text-text-secondary">Non : analyse à l'annonce</td>
                 <td class="py-4 pr-4 text-text-secondary">Places d'enchères B2B et marketplaces, via extension</td>
+                <td class="py-4 pr-4 text-text-secondary">Sans objet (analyse)</td>
+                <td class="py-4 pr-4 text-text-secondary">Marge potentielle à l'annonce</td>
                 <td class="py-4 pr-4 text-text-secondary">Sans objet (analyse)</td>
                 <td class="py-4 pr-4 text-text-secondary">Non</td>
                 <td class="py-4 text-text-secondary">19,90 €/mois, constaté en septembre 2026</td>
@@ -268,6 +290,14 @@ const jsonLd = [
           <a href="/fonctionnalites/crm-pipeline-vente/" class="text-accent hover:underline">CRM Kanban intégré</a>, et quand un vendeur
           rappelle, <a href="/fonctionnalites/appels-entrants-identifies/" class="text-accent hover:underline">le véhicule concerné est
           annoncé avant de décrocher</a>, l'appel s'affichant dans le CRM avec l'annonce, même manqué.
+        </p>
+        <p class="mt-3 leading-relaxed text-text-secondary">
+          Deux fonctionnalités récentes complètent le dispositif. D'abord les
+          <a href="/fonctionnalites/appels-entrants-identifies/" class="text-accent hover:underline">appels entrants identifiés</a> :
+          quand un propriétaire vous rappelle, le véhicule concerné est annoncé avant que vous ne décrochiez, et l'appel, même
+          manqué, apparaît dans le CRM sur la fiche du prospect avec l'annonce et son issue. Ensuite les
+          <strong class="text-text">pépites</strong> : chaque annonce reçoit un score, et vous êtes informé de celles qui ressortent
+          du lot, au lieu de parcourir tous les résultats à la main.
         </p>
         <p class="mt-3 leading-relaxed text-text-secondary">
           Deux choix structurants le distinguent parmi les outils comparés : l'<strong class="text-text">exclusivité des
