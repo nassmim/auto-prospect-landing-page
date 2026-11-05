@@ -53,7 +53,7 @@ import type { TPlan } from "../types/plan";
 //           <Check size={16} className="text-accent" /> Recherche automatique
 //         </li>
 //         <li className="flex items-center gap-2 text-sm">
-//           <Check size={16} className="text-accent" /> Détection temps réel
+//           <Check size={16} className="text-accent" /> Détection automatique
 //         </li>
 //         <li className="flex items-center gap-2 text-sm">
 //           <Check size={16} className="text-accent" /> Pipeline de vente
@@ -223,7 +223,7 @@ const FALLBACK_VOCAL_PACKS: TPlan[] = [
 
 const includes = [
   "Recherches automatiques illimitées",
-  "Détection temps réel des annonces",
+  "Détection automatique des annonces",
   "Analyse prix vs marché — repérez les bonnes affaires",
   "Contact multicanal : messagerie Leboncoin, WhatsApp, vocal",
   "Appels entrants identifiés : le véhicule annoncé avant de décrocher",

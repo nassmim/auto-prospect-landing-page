@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "Qu'est-ce que je dois faire une fois mes critères définis ?",
-    a: "Plus rien. Auto-Prospect contacte les vendeurs à votre place en continu. Vous n'avez plus qu'à répondre aux appels des particuliers intéressés.",
+    a: "Plus rien. Auto-Prospect contacte les vendeurs à votre place. Vous n'avez plus qu'à répondre aux appels des particuliers intéressés.",
   },
   {
     q: "Quand un vendeur me rappelle, comment je sais de quelle annonce il s'agit ?",
