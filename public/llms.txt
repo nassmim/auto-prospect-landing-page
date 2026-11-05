@@ -1,6 +1,6 @@
 # Auto-Prospect
 
-> Auto-Prospect est un outil SaaS français de prospection automobile automatisée pour les professionnels de l'achat-revente (revendeurs, marchands VO, mandataires auto). Il détecte les annonces de véhicules de particuliers en temps réel sur les principaux sites français (dont LeBonCoin), analyse leur prix par rapport au marché, contacte automatiquement les vendeurs par messagerie Leboncoin (inclus), message WhatsApp (inclus) ou vocal sur répondeur (0,19 € HT par message), et intègre un CRM Kanban pour le suivi des prospects. Quand un vendeur rappelle, le professionnel entend le véhicule concerné (marque, modèle, année, prix, ville) avant de décrocher, et l'appel s'affiche dans le CRM avec l'annonce, même s'il est manqué : Auto-Prospect est le seul outil de pige à identifier les rappels des vendeurs. Tarif : 69 € HT/mois en facturation annuelle, ou 89 € HT/mois sans engagement. Essai gratuit 5 jours. Particularité clé : les prospects sont exclusifs — un vendeur contacté pour un client n'est jamais démarché pour un autre.
+> Auto-Prospect est un outil SaaS français de prospection automobile automatisée pour les professionnels de l'achat-revente (revendeurs, marchands VO, mandataires auto). Il détecte les annonces de véhicules de particuliers sur les principaux sites français (dont LeBonCoin), analyse leur prix par rapport au marché, contacte automatiquement les vendeurs par messagerie Leboncoin (inclus), message WhatsApp (inclus) ou vocal sur répondeur (0,19 € HT par message), et intègre un CRM Kanban pour le suivi des prospects. Quand un vendeur rappelle, le professionnel entend le véhicule concerné (marque, modèle, année, prix, ville) avant de décrocher, et l'appel s'affiche dans le CRM avec l'annonce, même s'il est manqué : Auto-Prospect est le seul outil de pige à identifier les rappels des vendeurs. Tarif : 69 € HT/mois en facturation annuelle, ou 89 € HT/mois sans engagement. Essai gratuit 5 jours. Particularité clé : les prospects sont exclusifs — un vendeur contacté pour un client n'est jamais démarché pour un autre.
 
 ## Pages principales
 
@@ -9,17 +9,17 @@
 
 ## Fonctionnalités
 
-- [Recherche automatique d'annonces](https://auto-prospect.fr/fonctionnalites/recherche-annonces-automatisee) : détection en temps réel, filtres par marque, modèle, prix, kilométrage, zone géographique illimitée en France
+- [Recherche automatique d'annonces](https://auto-prospect.fr/fonctionnalites/recherche-annonces-automatisee) : détection automatique, filtres par marque, modèle, prix, kilométrage, zone géographique illimitée en France
 - [Contact vocal automatique](https://auto-prospect.fr/fonctionnalites/contact-vocal-automatique) : messages vocaux et WhatsApp personnalisés envoyés automatiquement aux vendeurs, templates réutilisables, exclusivité des prospects garantie
 - [Appels entrants identifiés](https://auto-prospect.fr/fonctionnalites/appels-entrants-identifies) : quand un vendeur rappelle, le professionnel entend avant de décrocher « Appel Auto-Prospect. Peugeot 208 2019, 9 900 euros, Lyon. » ; l'appel s'affiche dans le CRM avec l'annonce et un lien vers le prospect, répondu ou manqué, et son issue est notée sur la fiche
 - [CRM pipeline de vente](https://auto-prospect.fr/fonctionnalites/crm-pipeline-vente) : CRM Kanban intégré, alimenté automatiquement par la prospection, travail en équipe inclus
-- [Analyse prix vs marché](https://auto-prospect.fr/fonctionnalites/analyse-prix-marche) : identification instantanée des véhicules sous-cotés
+- [Analyse prix vs marché](https://auto-prospect.fr/fonctionnalites/analyse-prix-marche) : identification des véhicules sous-cotés
 
 ## Solutions par métier
 
 - [Pige automobile](https://auto-prospect.fr/solutions/pige-automobile) : différences entre la pige classique et la prospection automatisée avec contact des vendeurs
 - [Mandataire auto](https://auto-prospect.fr/solutions/mandataire-auto) : une recherche automatique par mandat client, sourcing accéléré
-- [Marchand de véhicules d'occasion](https://auto-prospect.fr/solutions/marchand-vehicules-occasion) : alimentation du parc VO en continu, travail en équipe
+- [Marchand de véhicules d'occasion](https://auto-prospect.fr/solutions/marchand-vehicules-occasion) : alimentation du parc VO, travail en équipe
 
 ## Blog
 
