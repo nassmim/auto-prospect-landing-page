@@ -151,3 +151,26 @@ cité sans rien changer, l'item se ferme sans article.
   `src/data/articles.ts` ; `llms.txt` a sa ligne sous « Pages principales ».
 - Liens sortants vers les concurrents en `rel="nofollow noopener noreferrer"`, sauf
   AlertDeals (produit frère, follow assumé, lien de la suite).
+
+## 2026-11-05 (cycle du lundi, décalé au jeudi)
+
+- File : 7 items ouverts, appels-entrants-002 étant coché (le prompt « appels
+  entrants » est bien suivi dans `.protocole/seo.json`). item-005 et agent-2026-42-001
+  forment un seul livrable : 6 sujets distincts, plus de deux semaines à la cadence d'un
+  article par semaine. Aucun item ajouté : les requêtes qui montent au-dessus du seuil
+  ont déjà une page propriétaire ou sont hors cible (détail dans keywords.md).
+- item-003 (pige) : « pige auto » appartient à `/solutions/pige-automobile` (position 5,8,
+  288 impressions sur la forme d'URL historique). Le comparatif nommé est en ligne depuis
+  le 2026-11-05. item-003 ne vise donc ni « pige auto » ni « logiciel pige automobile » en
+  title ou en H1 : angle « pige manuelle vs automatisée », lien vers le hub comme page de
+  référence. Sinon, trois pages se disputent la même requête.
+- item-004 (sourcing VO) passe avant item-006 : « sourcing vo » est passé de 4 à 12
+  impressions sur 28 jours.
+- item-005 / agent-2026-42-001 (prochain item servi) : la régression du prompt Leboncoin
+  n'a pas pu être remesurée cette semaine (solde treg à 0). Produire quand même : la page
+  manque de toute façon dans le cluster. Ajouter une section courte sur La Centrale et
+  AutoScout24 (nouvelle requête « comment contacter un vendeur sur la centrale »), sans
+  jamais dire comment les annonces sont récupérées.
+- Toujours relier tout nouvel article contact à
+  `/blog/whatsapp-message-vocal-vendeurs-particuliers-voiture/` : cette page est encore
+  inconnue de Google à J+25, faute de liens entrants autres que l'index du blog.
