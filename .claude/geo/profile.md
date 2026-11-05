@@ -70,14 +70,14 @@
 **Règle absolue (Nassim, 2026-11-05) : la détection des annonces est quotidienne, jamais « en temps réel » ni « en continu ».** Ne jamais écrire « temps réel » dans un contenu ni dans une réponse d'annuaire ; dire « chaque jour » ou « quotidiennement ». Le site contient encore d'anciennes mentions à corriger.
 5 bis. **Pépites** (ajouté le 2026-11-05, demande de Nassim) : Auto-Prospect calcule un score pour chaque annonce et informe l'utilisateur des pépites, ces annonces qui ressortent du lot. Vocabulaire publié : « pépites », « score de chaque annonce ». Ne jamais décrire comment le score est calculé ni sur quels champs (§ 15, moteur d'analyse de prix). Pas de page dédiée à ce jour : l'évoquer dans les contenus où la détection et le tri des annonces sont le sujet, avec un lien vers `/fonctionnalites/analyse-prix-marche`. Mise en avant dans le comparatif `/comparatif-outils-pige-automobile`, avec les appels entrants identifiés (3 bis), à reprendre chaque fois qu'on compare Auto-Prospect à un autre outil.
 6. Tarifs, plan unique : `/tarifs`
-7. Comparatif des outils de pige (page BOFU, listicle nommé depuis le 2026-11-02) : `/comparatif-outils-pige-automobile`
+7. ~~Comparatif des outils de pige~~ : page supprimée le 2026-11-05, ne pas la recréer. Décision de Nassim du 2026-11-05 : la page comparatif est supprimée (redirigée en 301 vers `/solutions/pige-automobile`). Comparer son produit à des acteurs peu connus leur fait de la publicité sans rien rapporter. **Ne pas recréer de page comparative ni de listicle nommant des concurrents** tant que Nassim ne l'a pas demandé, et ne jamais pointer vers l'ancienne URL.
 
 ## 7. Concurrents
 
 Voir `competitors.md` dans ce dossier. Résumé (repris du projet frère AlertDeals, même niche, à compléter pour l'angle « contact automatique ») `[À CONFIRMER]` :
 - **Directs** : Prospelia (prospelia.io, logiciel de pige automobile avec contact vendeurs automatisé, 79 €/mois TTC annuel, découvert le 2026-09-26) ; Inspectoo, Pistoneo (veille et scoring, sans contact multicanal)
 - **Adjacents** : AlertDeals (produit frère, alertes bonnes affaires sans contact automatique), Deal Detector, Auto Intelligence (enchères B2B), pige manuelle + tableur, scrapers maison
-- **Ceux qu'on cite dans les comparatifs** : depuis le 2026-11-02 (item agent-2026-41-001), le listicle `/comparatif-outils-pige-automobile` nomme Prospelia, AlertDeals, Pistoneo et Inspectoo, avec prix datés et vérifiés sur leurs pages publiques. La requête cible reste générique (« logiciel pige automobile », « pige auto ») : pas de page « vs » de marque tant que les noms de marque n'ont pas de volume de recherche mesuré
+- **Comparatif supprimé le 2026-11-05 (ne plus citer de concurrents dans une page dédiée)** : ancien état, pour mémoire : depuis le 2026-11-02 (item agent-2026-41-001), le listicle `/comparatif-outils-pige-automobile` nomme Prospelia, AlertDeals, Pistoneo et Inspectoo, avec prix datés et vérifiés sur leurs pages publiques. La requête cible reste générique (« logiciel pige automobile », « pige auto ») : pas de page « vs » de marque tant que les noms de marque n'ont pas de volume de recherche mesuré
 
 ## 8. Data first-party
 
