@@ -3,6 +3,8 @@
 > Alimenté par `keyword-pipeline` et `comparison-page`. Chaque ligne « prix » et « features »
 > est à fact-checker par un humain avant publication : c'est une zone à risque juridique et de réputation.
 >
+> **2026-11-05 : la page `/comparatif-outils-pige-automobile` est supprimée (décision de Nassim, redirigée vers `/solutions/pige-automobile`). Ne pas la recréer ni nommer de concurrents dans une page dédiée. Les concurrents directs à suivre pour la veille sont ceux qui font de la prospection automatique : Prospelia, PigeAuto et Prospection Manager (prospection-auto.fr). AlertDeals, Pistoneo et Inspectoo ne sont pas des outils de prospection.**
+>
 > État au 2026-09-26 (onboarding) : la page `/comparatif-outils-pige-automobile` compare Auto-Prospect
 > à « la concurrence » sans nommer personne. Les concurrents ci-dessous sont repris du projet frère
 > AlertDeals (même niche) et de l'exploration ; les outils de pige avec contact vendeur (SMS/vocal)

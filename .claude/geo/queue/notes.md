@@ -174,3 +174,9 @@ cité sans rien changer, l'item se ferme sans article.
 - Toujours relier tout nouvel article contact à
   `/blog/whatsapp-message-vocal-vendeurs-particuliers-voiture/` : cette page est encore
   inconnue de Google à J+25, faute de liens entrants autres que l'index du blog.
+
+## 2026-11-05 : suppression de la page comparatif (décision de Nassim)
+
+- La page `/comparatif-outils-pige-automobile` (existante depuis le 2026-09-01, refondue en listicle nommé le 2026-11-02) est supprimée et redirigée en 301 vers `/solutions/pige-automobile`. Raison : se comparer à des acteurs peu connus leur fait de la publicité sans rien rapporter ; AlertDeals, Pistoneo et Inspectoo ne sont d'ailleurs pas des outils de prospection.
+- L'item `agent-2026-41-001` reste coché mais son livrable n'existe plus. Ne pas le rouvrir ni produire de page comparative ou de listicle nommant des concurrents sans demande explicite de Nassim.
+- Les liens internes (pied de page, hub pige, page appels entrants), `llms.txt` et la liste des actifs citables de l'agent Autorité ont été nettoyés dans la même PR.
