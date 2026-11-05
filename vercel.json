@@ -1,4 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/comparatif-outils-pige-automobile", "destination": "/solutions/pige-automobile/", "permanent": true },
+    { "source": "/comparatif-outils-pige-automobile/", "destination": "/solutions/pige-automobile/", "permanent": true }
+  ]
 }
