@@ -21,6 +21,14 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "contacter-vendeurs-leboncoin-automatiquement",
+    title: "Contacter automatiquement les vendeurs de voitures sur Leboncoin : méthode et outils",
+    description:
+      "Ce que Leboncoin permet seul, les trois façons d'automatiser le premier message aux vendeurs, le message à envoyer sur la messagerie Leboncoin, et le cas de La Centrale et d'AutoScout24.",
+    category: "Canaux de contact",
+    datePublished: "2026-11-08",
+  },
+  {
     slug: "rappel-vendeur-particulier-identifier-annonce",
     title: "Un vendeur particulier vous rappelle : comment savoir de quelle annonce il s'agit avant de décrocher",
     description:
