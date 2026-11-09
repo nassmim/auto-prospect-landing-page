@@ -180,3 +180,20 @@ cité sans rien changer, l'item se ferme sans article.
 - La page `/comparatif-outils-pige-automobile` (existante depuis le 2026-09-01, refondue en listicle nommé le 2026-11-02) est supprimée et redirigée en 301 vers `/solutions/pige-automobile`. Raison : se comparer à des acteurs peu connus leur fait de la publicité sans rien rapporter ; AlertDeals, Pistoneo et Inspectoo ne sont d'ailleurs pas des outils de prospection.
 - L'item `agent-2026-41-001` reste coché mais son livrable n'existe plus. Ne pas le rouvrir ni produire de page comparative ou de listicle nommant des concurrents sans demande explicite de Nassim.
 - Les liens internes (pied de page, hub pige, page appels entrants), `llms.txt` et la liste des actifs citables de l'agent Autorité ont été nettoyés dans la même PR.
+
+## 2026-11-09 (cycle du lundi)
+
+- Aucun article produit depuis le 2026-11-02 : la session du jour n'a rien livré alors
+  que la file avait des items. Prochain servi : agent-2026-42-001.
+- Inspections du 2026-11-09 : `/blog/whatsapp-message-vocal-vendeurs-particuliers-voiture/`
+  « URL is unknown to Google » à J+29 ; `/blog/prospection-automobile-methode/`
+  « Crawled - currently not indexed » sur l'URL canonique. Tout nouvel article du cluster
+  contact doit relier l'article WhatsApp dans le corps du texte, pas seulement en fin de page.
+- Formes d'URL : Google voit encore des impressions sur les formes sans slash et sur
+  `www.` (toutes redirigent en 308 vers la forme canonique avec slash). Dans les liens
+  internes et dans `llms.txt`, toujours écrire la forme canonique avec slash final pour
+  éviter une chaîne de redirections.
+- item-003 (pige) : ajouter une section qui distingue un outil de pige d'un logiciel de
+  gestion de stock et de multidiffusion, sans nommer d'éditeur. C'est la confusion que fait
+  Perplexity sur le prompt « meilleur logiciel de pige ».
+
