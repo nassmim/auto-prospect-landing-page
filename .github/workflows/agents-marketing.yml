@@ -5,10 +5,10 @@ name: agents-marketing
 on:
   schedule:
     # GitHub peut retarder ou abandonner les crons posés pile à l'heure : on évite les minutes 00.
-    # TEST ponctuel : article le dimanche 8 novembre 2026 à 13h20 UTC, pour vérifier que le
+    # TEST ponctuel : article le mardi 10 novembre 2026 à 14h50 UTC, pour vérifier que le
     # déclenchement automatique fonctionne. Une fois validé, remplacer par le cron hebdomadaire
     # de l'article (dimanche, minute 17 : "17 8 * * 0") et adapter la condition de la matrice.
-    - cron: "20 13 8 11 *"
+    - cron: "50 14 10 11 *"
     - cron: "23 5 * * 1"
     # Rattrapage : le lundi, relance l'article s'il n'y a eu aucune PR d'article cette semaine.
     - cron: "41 9 * * 1"
