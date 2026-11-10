@@ -44,7 +44,7 @@
   - Attention particulière sur les comparatifs (`comparison-page`, dont
     `agent-2026-41-001`) : comparer Auto-Prospect à un concurrent pousse à
     expliquer comment il fonctionne. Décrire le résultat pour l'utilisateur
-    (temps réel, exclusivité des prospects, zones illimitées), jamais la
+    (détection automatique, exclusivité des prospects, zones illimitées), jamais la
     plomberie qui le produit.
   - Un chiffre issu de nos données se cite « données internes Auto-Prospect,
     N annonces, période », sans nommer la base, le schéma ni le rôle de lecture.
