@@ -29,7 +29,7 @@ concurrency:
 env:
   PACK_REPO: nassmim/agents-claude-marketing
   # Version du pack utilisée par CE projet : on ne la change que volontairement.
-  PACK_REF: dfb25b79222c09559baa7b033a783c85569af1c4
+  PACK_REF: d5f40985ae0bf26c33894973263f9cf12758d0f7
   CLAUDE_CODE_VERSION: "2.1.302"
   TREG_VERSION: "0.20.0"
 
@@ -144,7 +144,7 @@ jobs:
         run: |
           depuis=$(date -u -d '6 days ago' +%Y-%m-%dT%H:%M:%SZ)
           n=$(gh pr list --repo "$GITHUB_REPOSITORY" --state all --limit 50 --json headRefName,createdAt \
-            --jq "[.[] | select(.headRefName | startswith(\"geo/blog-\")) | select(.createdAt >= \"$depuis\")] | length")
+            --jq "[.[] | select(.headRefName | startswith(\"geo/blog-\") or startswith(\"geo/retouche-\")) | select(.createdAt >= \"$depuis\")] | length")
           echo "PR d'article depuis $depuis : $n"
           if [ "$n" = "0" ]; then
             echo "Aucun article cette semaine : relance de l'agent article."
