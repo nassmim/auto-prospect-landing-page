@@ -181,6 +181,26 @@ cité sans rien changer, l'item se ferme sans article.
 - L'item `agent-2026-41-001` reste coché mais son livrable n'existe plus. Ne pas le rouvrir ni produire de page comparative ou de listicle nommant des concurrents sans demande explicite de Nassim.
 - Les liens internes (pied de page, hub pige, page appels entrants), `llms.txt` et la liste des actifs citables de l'agent Autorité ont été nettoyés dans la même PR.
 
+## 2026-11-08 (items agent-2026-42-001 et item-005, même livrable)
+
+- Article `/blog/contacter-vendeurs-leboncoin-automatiquement/`, branche `geo/blog-2026-11-08`.
+  Réponse extractible en tête (« La réponse courte ») reprise mot pour mot comme première
+  réponse de la FAQ, pour que le `FAQPage` porte la même phrase que le corps.
+- Distinction avec l'article WhatsApp : celui-ci part de Leboncoin (47,9 % des annonces
+  avec numéro, donc la messagerie Leboncoin est le seul canal pour plus de la moitié des
+  vendeurs) et compare les façons d'automatiser ; le droit et la comparaison des canaux
+  sont renvoyés vers les articles existants.
+- Section La Centrale / AutoScout24 : contact par WhatsApp ou vocal sur le numéro de
+  l'annonce, la messagerie Leboncoin ne servant qu'à Leboncoin. Déduit de la copy publique,
+  à confirmer côté produit (réserve n° 1 du brief).
+- Le modèle de message n'utilise aucune variable (modèle, année) : rien ne dit que le
+  produit les insère. Sur Leboncoin, la conversation est rattachée à l'annonce, donc pas
+  besoin de nommer le véhicule.
+- Liens entrants à poser dans une passe `internal-linking` : hub contact-multicanal et
+  article méthode (étape 4, qui capte « comment contacter un vendeur sur la centrale »).
+- Une fois en ligne, remesurer le prompt Leboncoin au prochain lundi où le solde treg le
+  permet, pour savoir si la citation revient.
+
 ## 2026-11-09 (cycle du lundi)
 
 - Aucun article produit depuis le 2026-11-02 : la session du jour n'a rien livré alors
