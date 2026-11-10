@@ -42,6 +42,7 @@
 | « crm concession automobile » (11 impressions), « crm concessionnaire automobile », « service client automobile », « prospection flotte auto » (17 impressions), « devis publiscopies automobile », « fournisseur publiscopies automobile » (28 jours au 2026-11-02) | Hors cible : concessions, flottes d'entreprise et publicité sur véhicule, pas l'achat aux particuliers. « crm concession automobile » atterrit déjà sur l'article CRM, qui suffit |
 | « vente a marchand » (16 impressions, nouvelle au 2026-11-02) | Intention vendeur particulier (vendre sa voiture à un marchand), pas la cible acheteuse ; aucun article |
 | « prospection automatique » (114 impressions, position 46, sur la page d'accueil, 28 jours au 2026-11-02) | Requête générique, majoritairement de la prospection B2B hors automobile ; déjà travaillée par item-001, pas de nouvel item |
+| Questions longues de type assistant IA, côté acheteur particulier (« les acheteurs peuvent-ils identifier des annonces volvo proposées à un prix juste… », « qui fournit des outils de prix aux propriétaires préparant la vente d'une chevrolet ? », une à cinq impressions chacune, 28 jours au 2026-11-06) | Hors cible : particuliers qui achètent ou vendent leur propre voiture. Elles atterrissent sur la page d'accueil et sur `/fonctionnalites/analyse-prix-marche` ; aucun article |
 
 ## Sources d'expansion utilisées
 
@@ -65,3 +66,31 @@
   n'y apparaît pas.
 - Visibilité IA non mesurée cette semaine : solde treg à 0 $, aucun prompt posé. Dernier
   état connu : 1 prompt cité sur 5 le 2026-10-12.
+
+## 2026-11-09 : cycle du lundi (Search Console 2026-10-10 → 2026-11-06)
+
+- Site : les cinq articles indexés totalisent 785 impressions sur 28 jours, contre 55 la
+  période d'avant. En tête : `/blog/crm-automobile-marchand-vo` (420 impressions, position
+  14,4), l'article sur la loi du 11 août (181, position 5,2), l'article de statistiques (102,
+  position 5,0), l'article sur le rappel des vendeurs (66, position 7,1).
+- Requêtes qui montent sans article dédié : « pige auto » (349, contre 209), « recherche
+  auto activé » et « recherche auto activée » (284 cumulées, zéro clic), « prospection
+  automatique » (107, position 45,6). Toutes déjà arbitrées plus haut : hub pige
+  propriétaire et item-003, écartées, ou écartée. Aucun item créé.
+- Prompts IA (Perplexity, 6 posés) : 2 citent Auto-Prospect (contact Leboncoin, CRM d'achat
+  VO). À zéro : pige (réponse orientée logiciel de gestion de stock, l'item-003 reçoit une
+  section pour distinguer les deux), véhicules sous-cotés (territoire AlertDeals, écarté),
+  WhatsApp ou vocal (cité le 2026-10-12, plus aujourd'hui ; l'article dédié n'est toujours
+  pas connu de Google, c'est un problème d'indexation avant d'être un problème de contenu),
+  rappel des vendeurs (le moteur répond pour l'immobilier : la formulation du prompt ne
+  précise pas l'automobile).
+- Le prompt Leboncoin est de nouveau cité : la régression du 2026-10-12 n'est pas
+  confirmée. agent-2026-42-001 reste ouvert car il porte le livrable de item-005.
+- Propriétaires désignés : « crm automobile » → `/blog/crm-automobile-marchand-vo`
+  (la page fonctionnalité CRM, en position 64 à 69, doit retirer « CRM automobile » de son
+  title et de son H1) ; « pige auto » et « pige automobile » → `/solutions/pige-automobile` ;
+  « prospection automobile » → page d'accueil (position 3,4), l'article méthode est
+  « Crawled - currently not indexed » sur son URL canonique et doit changer d'angle.
+- File : 7 items ouverts, 6 sujets distincts, six semaines à la cadence d'un article par
+  semaine. Prochain servi : agent-2026-42-001 (contact des vendeurs Leboncoin), puis
+  item-009 (dépôt-vente, cluster conformité, celui qui répond le mieux).
