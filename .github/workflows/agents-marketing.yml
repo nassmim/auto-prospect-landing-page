@@ -5,10 +5,8 @@ name: agents-marketing
 on:
   schedule:
     # GitHub peut retarder ou abandonner les crons posés pile à l'heure : on évite les minutes 00.
-    # TEST ponctuel : article le mardi 10 novembre 2026 à 14h50 UTC, pour vérifier que le
-    # déclenchement automatique fonctionne. Une fois validé, remplacer par le cron hebdomadaire
-    # de l'article (dimanche, minute 17 : "17 8 * * 0") et adapter la condition de la matrice.
-    - cron: "50 14 10 11 *"
+    # Article hebdomadaire. GitHub le lance souvent avec plusieurs heures de retard : c'est attendu.
+    - cron: "17 8 * * 0"
     - cron: "23 5 * * 1"
     # Rattrapage : le lundi, relance l'article s'il n'y a eu aucune PR d'article cette semaine.
     - cron: "41 9 * * 1"
@@ -100,7 +98,9 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TREG_TOKEN: ${{ secrets.TREG_TOKEN }}
-          GH_TOKEN: ${{ github.token }}
+          # PR_TOKEN (jeton personnel limité à ce dépôt) fait ouvrir les PR au nom de l'équipe, sans
+          # approbation manuelle des contrôles ; repli sur le jeton automatique s'il n'existe pas.
+          GH_TOKEN: ${{ secrets.PR_TOKEN || github.token }}
         run: |
           claude -p "$(cat "$GITHUB_WORKSPACE/.github/agents/prompts/${{ matrix.agent }}.md")" \
             --permission-mode bypassPermissions \
