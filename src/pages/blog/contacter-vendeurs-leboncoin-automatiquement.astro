@@ -1,0 +1,462 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import CalendlyWidget from "../../components/CalendlyWidget.astro";
+import SubPageCTA from "../../components/SubPageCTA.astro";
+import { APP_LOGIN_URL } from "../../lib/api";
+import "../../styles/global.css";
+
+const title =
+  "Contacter automatiquement les vendeurs de voitures sur Leboncoin | Auto-Prospect";
+const description =
+  "Comment envoyer un premier message à chaque vendeur de voiture sur Leboncoin sans le faire à la main : ce que Leboncoin permet seul, les trois façons d'automatiser, le message à envoyer, et le cas de La Centrale et d'AutoScout24.";
+
+const datePublished = "2026-11-08";
+
+const siteOrigin = Astro.site?.origin ?? "https://auto-prospect.fr";
+const canonical = `${siteOrigin}/blog/contacter-vendeurs-leboncoin-automatiquement/`;
+
+// Étapes de mise en place : chaque étape est aussi un HowToStep dans le JSON-LD.
+const etapes = [
+  {
+    nom: "Créer une recherche par type de véhicule recherché",
+    texte:
+      "Marque, modèle, années, kilométrage maximal, prix maximal et départements. Une recherche correspond à une ligne de parc pour un marchand, ou à un mandat client pour un mandataire.",
+  },
+  {
+    nom: "Choisir les canaux et rédiger le modèle de message",
+    texte:
+      "Messagerie Leboncoin, WhatsApp, message vocal sur répondeur, ou plusieurs à la fois. Vous rédigez le modèle une fois pour chaque canal ; il sert ensuite pour chaque annonce de la recherche.",
+  },
+  {
+    nom: "Laisser chaque nouvelle annonce déclencher l'envoi",
+    texte:
+      "Chaque annonce de particulier détectée qui correspond à la recherche déclenche l'envoi du message au vendeur, sur le canal choisi. Un vendeur contacté pour vous ne l'est pour aucun autre client.",
+  },
+  {
+    nom: "Traiter les réponses et les rappels",
+    texte:
+      "Le vendeur répond dans la messagerie ou vous rappelle. Chaque contact devient un prospect dans le CRM, avec l'annonce, et vous reprenez la main pour la discussion, la visite et la négociation.",
+  },
+];
+
+const methodes = [
+  {
+    methode: "À la main",
+    automatise: "Rien",
+    limite: "Une consultation et un message par annonce ; vous arrivez après ceux qui sont équipés",
+  },
+  {
+    methode: "Alertes Leboncoin et modèle copié-collé",
+    automatise: "La détection, sur Leboncoin seulement",
+    limite: "Chaque message reste à envoyer à la main, annonce par annonce, sans suivi des réponses",
+  },
+  {
+    methode: "Script ou extension qui pilote votre compte",
+    automatise: "L'envoi, de façon fragile",
+    limite: "Casse à chaque évolution du site, et un envoi en rafale depuis un compte personnel ressemble à du spam",
+  },
+  {
+    methode: "Logiciel de prospection automobile",
+    automatise: "Détection, envoi, relances, suivi des réponses",
+    limite: "Abonnement mensuel ; la visite et la négociation restent à votre main",
+  },
+];
+
+const faq = [
+  {
+    q: "Comment contacter automatiquement les vendeurs de voitures sur Leboncoin ?",
+    a:
+      "Avec un logiciel de prospection automobile qui détecte les nouvelles annonces de particuliers selon vos critères et envoie à votre place un premier message au vendeur. Auto-Prospect le fait sur Leboncoin, AutoScout24 et La Centrale : chaque annonce détectée qui correspond à une de vos recherches déclenche un message dans la " +
+      "messagerie Leboncoin du vendeur, un WhatsApp ou un message vocal sur répondeur, selon les canaux que vous avez choisis. Leboncoin seul permet d'être alerté d'une nouvelle annonce, pas d'envoyer le message automatiquement.",
+  },
+  {
+    q: "Comment contacter un vendeur Leboncoin qui n'affiche pas son numéro de téléphone ?",
+    a:
+      "Par la messagerie Leboncoin, qui reste le seul canal possible dans ce cas. C'est la situation la plus fréquente : d'après nos données internes (35 122 annonces de particuliers, juin à septembre 2026), seules 47,9 % des annonces Leboncoin affichent un numéro. Un outil qui ne contacte que par téléphone, WhatsApp ou vocal laisse donc de côté plus de la moitié des " +
+      "vendeurs Leboncoin.",
+  },
+  {
+    q: "Comment contacter un vendeur sur La Centrale ou sur AutoScout24 ?",
+    a:
+      "Par le formulaire de contact de l'annonce, ou par le numéro de téléphone quand le vendeur l'affiche. Avec Auto-Prospect, les annonces de particuliers de La Centrale et d'AutoScout24 sont détectées comme celles de Leboncoin ; le contact passe alors par WhatsApp ou par un message vocal sur répondeur, sur le numéro indiqué dans l'annonce. " +
+      "La messagerie Leboncoin, elle, ne sert que pour les annonces Leboncoin.",
+  },
+  {
+    q: "Le vendeur voit-il que le message est envoyé automatiquement ?",
+    a: "Il reçoit le message que vous avez rédigé, envoyé à votre nom. Ce qui trahit un envoi automatique, c'est un texte générique (« votre véhicule m'intéresse, dernier prix ? »), pas l'outil. Un message court, qui dit qui vous êtes, ce que vous proposez et comment vous joindre, est lu comme celui d'un professionnel sérieux.",
+  },
+  {
+    q: "Que se passe-t-il quand le vendeur répond ou rappelle ?",
+    a:
+      "Avec Auto-Prospect, chaque vendeur contacté devient un prospect dans le CRM intégré, avec son annonce. Quand il vous rappelle, vous entendez le véhicule concerné avant de décrocher, et l'appel s'affiche dans le CRM avec l'annonce, même s'il est manqué. Vous savez donc de quelle voiture il s'agit dès la première seconde, " +
+      "même avec plusieurs dizaines de messages envoyés dans la semaine.",
+  },
+  {
+    q: "Combien coûte l'envoi automatique de messages aux vendeurs Leboncoin ?",
+    a: "Chez Auto-Prospect, la détection des annonces, la messagerie Leboncoin et WhatsApp sont inclus dans le plan unique à 69 € HT par mois en facturation annuelle, ou 89 € HT sans engagement. Les messages vocaux sont facturés 0,19 € HT l'unité, avec des packs de 100 à 20 € HT et de 500 à 80 € HT. L'essai est gratuit pendant 5 jours.",
+  },
+];
+
+const sources = [
+  {
+    label: "Données internes Auto-Prospect, 35 122 annonces de particuliers, 1er juin au 25 septembre 2026 : 16 statistiques sur les annonces de particuliers",
+    url: "https://auto-prospect.fr/blog/statistiques-annonces-voitures-occasion-particuliers-2026/",
+  },
+  {
+    label: "leboncoin, espace presse Automobile, communiqué du 2 janvier 2026",
+    url: "https://presse.leboncoincorporate.com/automobile.html",
+  },
+  {
+    label:
+      "Code des postes et des communications électroniques, article L34-5 (prospection directe par automate d'appel, télécopieur ou courrier électronique), Légifrance",
+    url: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000037671194",
+  },
+];
+
+const jsonLd = [
+  {
+    "@type": "BlogPosting",
+    "headline": "Contacter automatiquement les vendeurs de voitures sur Leboncoin : méthode et outils",
+    "description": description,
+    "url": canonical,
+    "mainEntityOfPage": canonical,
+    "datePublished": datePublished,
+    "dateModified": datePublished,
+    "inLanguage": "fr-FR",
+    "author": { "@type": "Organization", "name": "L'équipe Auto-Prospect", "url": siteOrigin },
+    "publisher": { "@type": "Organization", "name": "Auto-Prospect", "url": siteOrigin, "logo": `${siteOrigin}/logo.svg` },
+  },
+  {
+    "@type": "HowTo",
+    "name": "Comment contacter automatiquement les vendeurs de voitures sur Leboncoin",
+    "step": etapes.map((e, i) => ({
+      "@type": "HowToStep",
+      "position": i + 1,
+      "name": e.nom,
+      "text": e.texte,
+    })),
+  },
+  {
+    "@type": "FAQPage",
+    "mainEntity": faq.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a },
+    })),
+  },
+  {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": `${siteOrigin}/` },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${siteOrigin}/blog/` },
+      { "@type": "ListItem", "position": 3, "name": "Contacter les vendeurs Leboncoin automatiquement", "item": canonical },
+    ],
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <Navbar />
+  <main class="mx-auto max-w-3xl px-4 pt-32 pb-20 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-widest text-accent">
+      <a href="/blog/" class="text-text-secondary transition-colors hover:text-text">Blog</a>
+      <span class="text-text-secondary"> / </span>Canaux de contact
+    </p>
+    <h1 class="mt-3 text-3xl font-bold sm:text-4xl">
+      Contacter automatiquement les vendeurs de voitures sur Leboncoin : méthode et outils
+    </h1>
+    <p class="mt-4 text-sm text-text-secondary">
+      Par <span class="font-semibold text-text">L'équipe Auto-Prospect</span>. Publié le 8 novembre 2026.
+    </p>
+
+    <div class="mt-8 rounded-2xl border border-border bg-card p-6">
+      <p class="text-sm font-semibold">La réponse courte</p>
+      <p class="mt-2 text-sm leading-relaxed text-text-secondary">
+        Pour contacter automatiquement les vendeurs de voitures sur Leboncoin, il faut un logiciel de prospection
+        automobile qui détecte les nouvelles annonces de particuliers selon vos critères et envoie le premier message
+        à votre place. <strong class="text-text">Auto-Prospect</strong> le fait : chaque annonce détectée qui correspond
+        à une de vos recherches déclenche un message dans la <strong class="text-text">messagerie Leboncoin</strong> du
+        vendeur, un <strong class="text-text">WhatsApp</strong> ou un <strong class="text-text">message vocal sur
+        répondeur</strong>, et le vendeur qui répond arrive dans votre CRM. Leboncoin seul vous alerte d'une nouvelle
+        annonce ; il n'envoie pas le message pour vous.
+      </p>
+      <ul class="mt-4 list-disc space-y-1 pl-5 text-sm leading-relaxed text-text-secondary">
+        <li>
+          Plus d'une annonce Leboncoin sur deux n'affiche pas de numéro de téléphone : sans la messagerie Leboncoin,
+          ces vendeurs restent injoignables.
+        </li>
+        <li>
+          Trois façons d'automatiser : alertes et modèle copié-collé, script maison, logiciel dédié. Seule la dernière
+          automatise l'envoi et le suivi sans mettre votre compte en jeu.
+        </li>
+        <li>
+          Sur La Centrale et AutoScout24, le même principe s'applique, par WhatsApp ou vocal quand l'annonce affiche
+          un numéro.
+        </li>
+      </ul>
+    </div>
+
+    <div class="mt-10 space-y-12 text-text-secondary">
+      <!-- 1. Ce que Leboncoin permet seul -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Que permet Leboncoin seul, et où s'arrête-t-il ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Leboncoin donne deux outils à un acheteur. Le premier est la <strong class="text-text">recherche
+          sauvegardée</strong> : vous enregistrez vos filtres (marque, modèle, prix, kilométrage, localisation) et
+          vous recevez une alerte quand une nouvelle annonce y correspond. Le second est la
+          <strong class="text-text">messagerie</strong>, rattachée à chaque annonce, où le vendeur reçoit les
+          messages des acheteurs intéressés.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Entre les deux, tout reste manuel : ouvrir l'alerte, lire l'annonce, juger le prix, écrire le message,
+          l'envoyer, puis noter quelque part qui vous avez contacté et qui a répondu. Pour un particulier qui achète
+          une voiture, c'est suffisant. Pour un marchand VO ou un mandataire qui suit une dizaine de recherches, ce
+          sont des dizaines de messages par semaine, écrits un par un, sans trace centralisée.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Le gisement justifie l'effort. Dans son communiqué du 2 janvier 2026, Leboncoin annonçait plus de 700 000
+          véhicules disponibles, dont plus de 400 000 provenant de professionnels : il reste de l'ordre de 300 000
+          annonces de particuliers en ligne à tout moment. Et ces vendeurs se joignent d'abord par la messagerie :
+          d'après nos données internes (35 122 annonces de particuliers, juin à septembre 2026), seules
+          <strong class="text-text">47,9 % des annonces Leboncoin affichent un numéro de téléphone</strong>, et 17,8 %
+          un numéro joignable sur WhatsApp. Le détail est dans nos
+          <a href="/blog/statistiques-annonces-voitures-occasion-particuliers-2026/" class="text-accent hover:underline">16 statistiques sur les annonces de particuliers en 2026</a>.
+        </p>
+      </section>
+
+      <!-- 2. Trois façons d'automatiser -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Quelles sont les façons d'automatiser le contact des vendeurs Leboncoin ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          On distingue trois niveaux, qui n'automatisent pas les mêmes étapes. Le tableau les compare au travail
+          entièrement manuel.
+        </p>
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full border-collapse text-left text-sm">
+            <thead>
+              <tr class="border-b border-border">
+                <th class="py-3 pr-4 font-medium">Méthode</th>
+                <th class="py-3 pr-4 font-medium">Ce qui est automatisé</th>
+                <th class="py-3 font-medium">Limite</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+              {
+                methodes.map((m) => (
+                  <tr>
+                    <td class="py-3 pr-4 font-medium text-text">{m.methode}</td>
+                    <td class="py-3 pr-4">{m.automatise}</td>
+                    <td class="py-3">{m.limite}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="mt-8 font-semibold text-text">Les alertes et un modèle de message</h3>
+        <p class="mt-2 leading-relaxed">
+          C'est le premier pas, gratuit : une recherche sauvegardée par type de véhicule, et un message type gardé
+          dans les notes de votre téléphone. Vous gagnez le temps de la recherche, pas celui du contact. Et vous ne
+          couvrez que Leboncoin : La Centrale et AutoScout24 demandent chacune leurs propres alertes.
+        </p>
+
+        <h3 class="mt-6 font-semibold text-text">Le script ou l'extension maison</h3>
+        <p class="mt-2 leading-relaxed">
+          Certains professionnels font écrire un petit programme qui ouvre les annonces et envoie le message depuis
+          leur propre compte. Sur le papier, c'est l'automatisation complète. En pratique, l'outil casse à chaque
+          évolution du site, n'envoie que sur la messagerie, ne garde aucun suivi des réponses, et un compte
+          personnel qui envoie le même texte à des dizaines de vendeurs en quelques minutes a tout d'un compte de
+          spam. Le risque de voir ce compte restreint pèse sur votre activité.
+        </p>
+
+        <h3 class="mt-6 font-semibold text-text">Le logiciel de prospection automobile</h3>
+        <p class="mt-2 leading-relaxed">
+          C'est un outil conçu pour ce métier : il détecte les annonces sur plusieurs marketplaces, envoie le premier
+          message sur le canal choisi, et range chaque vendeur contacté dans un suivi. C'est ce que fait
+          <a href="/solutions/pige-automobile/" class="text-accent hover:underline">un outil de pige automatisée avec contact des vendeurs</a>.
+          Les points à vérifier avant de choisir : les canaux couverts (la messagerie Leboncoin en fait-elle partie ?),
+          les marketplaces surveillées, et l'exclusivité des vendeurs. Si le même vendeur reçoit le même message de
+          dix abonnés du même outil, il ne répond à aucun.
+        </p>
+      </section>
+
+      <!-- 3. Mise en place avec Auto-Prospect -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Comment ça se passe concrètement avec Auto-Prospect ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          La mise en place tient en quatre étapes, à faire une fois. Ensuite, le contact des nouveaux vendeurs se
+          fait sans vous.
+        </p>
+        <ol class="mt-5 space-y-3">
+          {
+            etapes.map((e, i) => (
+              <li class="rounded-xl border border-border bg-card p-5">
+                <p class="font-semibold text-text">{i + 1}. {e.nom}</p>
+                <p class="mt-2 text-sm leading-relaxed">{e.texte}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="mt-5 leading-relaxed">
+          Le choix du canal se fait annonce par annonce selon ce que le vendeur a publié. La messagerie Leboncoin
+          joint tous les vendeurs Leboncoin, numéro affiché ou non. WhatsApp et le message vocal sur répondeur
+          demandent un numéro, et se distinguent davantage d'une boîte de réception déjà pleine. Le détail des trois
+          canaux est sur la page
+          <a href="/fonctionnalites/contact-multicanal/" class="text-accent hover:underline">contact multicanal des vendeurs</a>,
+          et leur comparaison, avec ce que la loi autorise pour chacun, dans notre article
+          <a href="/blog/whatsapp-message-vocal-vendeurs-particuliers-voiture/" class="text-accent hover:underline">WhatsApp et message vocal : comment contacter les vendeurs particuliers</a>.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Le dernier maillon est souvent le plus négligé : le rappel. Le vendeur rappelle à son heure, parfois deux
+          jours plus tard, quand vous avez contacté quarante annonces entre-temps. Avec Auto-Prospect, vous entendez
+          le véhicule concerné avant de décrocher, et l'appel s'affiche dans le CRM avec l'annonce, même manqué :
+          ce sont les
+          <a href="/fonctionnalites/appels-entrants-identifies/" class="text-accent hover:underline">appels entrants identifiés</a>.
+        </p>
+      </section>
+
+      <!-- CTA intermédiaire contextualisé -->
+      <aside class="rounded-2xl border border-accent/30 bg-gradient-to-b from-accent/10 to-transparent p-6 sm:p-8">
+        <p class="text-lg font-bold text-text">Chaque vendeur Leboncoin contacté, sans écrire un message de plus</p>
+        <p class="mt-2 leading-relaxed">
+          Auto-Prospect détecte les annonces de particuliers sur Leboncoin, AutoScout24 et La Centrale, contacte les
+          vendeurs par messagerie Leboncoin, WhatsApp ou message vocal, et range chaque réponse dans votre CRM.
+          Messagerie Leboncoin et WhatsApp inclus dans l'abonnement.
+        </p>
+        <div class="mt-5">
+          <a
+            href={APP_LOGIN_URL}
+            data-cta="blog-contacter-vendeurs-leboncoin"
+            class="inline-block rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-bg shadow-lg shadow-accent/25 transition-all hover:bg-accent-hover hover:shadow-accent/40"
+          >
+            Essayer gratuitement pendant 5 jours
+          </a>
+        </div>
+      </aside>
+
+      <!-- 4. Le message -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Quel message envoyer à un vendeur sur la messagerie Leboncoin ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Sur Leboncoin, la conversation est rattachée à l'annonce : le vendeur sait déjà de quelle voiture vous
+          parlez. Le message n'a donc pas à décrire le véhicule ; il doit dire qui vous êtes, ce que vous proposez,
+          et donner une raison simple de répondre. Exemple, à adapter :
+        </p>
+        <blockquote class="mt-3 rounded-xl border border-border bg-card p-5 text-sm leading-relaxed">
+          « Bonjour, je suis [prénom], marchand automobile à [ville]. Votre véhicule correspond à ce que je recherche
+          pour mon parc. J'achète rapidement, je me déplace à votre convenance et je règle par virement le jour de la
+          visite. Vous pouvez me répondre ici ou m'appeler au [numéro]. »
+        </blockquote>
+        <p class="mt-3 leading-relaxed">
+          Trois règles valent quel que soit l'outil. Pas de prix dans le premier message : une offre à l'aveugle
+          braque le vendeur et vous engage sur un chiffre. Pas de faux profil particulier : présentez-vous comme
+          professionnel, beaucoup de vendeurs préfèrent une vente rapide et sûre. Et un numéro à rappeler : vos
+          messages donnent aux vendeurs votre numéro, ce qui fait passer une partie des échanges au téléphone, là où
+          le rendez-vous se décide.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Sur le plan légal, répondre à l'annonce d'un vendeur qui cherche un acheteur n'est pas la même chose que
+          lui proposer un service qu'il n'a pas demandé. Le cadre applicable depuis le 11 août 2026 est détaillé dans
+          notre article sur
+          <a href="/blog/loi-11-aout-2026-demarchage-prospection-vendeurs-particuliers/" class="text-accent hover:underline">la loi sur le démarchage et les vendeurs particuliers</a>.
+        </p>
+      </section>
+
+      <!-- 5. La Centrale et AutoScout24 -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Et sur La Centrale et AutoScout24 ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Les deux autres grandes marketplaces françaises fonctionnent sur le même modèle : une annonce, un formulaire
+          de contact, et un numéro de téléphone quand le vendeur choisit de l'afficher. Pour contacter un vendeur sur
+          La Centrale ou sur AutoScout24 à la main, vous passez donc par le formulaire de l'annonce ou par ce numéro.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Avec Auto-Prospect, une même recherche couvre les trois marketplaces : les annonces de particuliers de La
+          Centrale et d'AutoScout24 sont détectées comme celles de Leboncoin, et le vendeur est contacté par WhatsApp
+          ou par message vocal sur répondeur, sur le numéro indiqué dans l'annonce. La messagerie Leboncoin, elle, ne
+          sert que pour les annonces Leboncoin. Tout arrive au même endroit : un seul
+          <a href="/fonctionnalites/crm-pipeline-vente/" class="text-accent hover:underline">pipeline de vente</a>,
+          quelle que soit la plateforme d'origine.
+        </p>
+      </section>
+
+      <!-- 6. Mesurer -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Comment savoir si l'automatisation fonctionne chez vous ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Trois chiffres suffisent, suivis chaque semaine et par canal : le nombre de vendeurs contactés, le taux de
+          réponse (message ou rappel), et le taux de rendez-vous parmi les réponses. Un taux de réponse qui baisse
+          signale un message à réécrire ; un taux de rendez-vous qui baisse signale un tri des annonces trop large.
+          Aucun ratio universel ne vaut pour tous les segments et toutes les régions : vos propres chiffres, au bout
+          de quelques semaines, sont la seule référence fiable.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Ce suivi suppose que chaque contact soit noté. C'est l'intérêt d'un outil qui range automatiquement chaque
+          vendeur contacté dans un CRM : la mesure se fait sans saisie. Les étapes du pipeline et les indicateurs à
+          suivre sont détaillés dans notre
+          <a href="/blog/crm-automobile-marchand-vo/" class="text-accent hover:underline">guide du CRM automobile pour marchand VO</a>,
+          et la méthode complète, de la recherche à l'achat, dans
+          <a href="/blog/prospection-automobile-methode/" class="text-accent hover:underline">la méthode de prospection automobile</a>.
+        </p>
+      </section>
+
+      <!-- FAQ -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">Questions fréquentes</h2>
+        <div class="mt-4">
+          {
+            faq.map((f) => (
+              <details class="group border-b border-border py-2">
+                <summary class="flex cursor-pointer items-center justify-between py-3 text-sm font-medium text-text sm:text-base [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <span class="ml-4 text-text-secondary transition-transform group-open:rotate-180">⌄</span>
+                </summary>
+                <p class="pb-4 text-sm leading-relaxed">{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Sources -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">Sources</h2>
+        <ul class="mt-3 list-disc space-y-1 pl-5 text-sm">
+          {
+            sources.map((s) => (
+              <li>
+                <a href={s.url} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">{s.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-3 text-xs">
+          Les recommandations sur les messages et le suivi proviennent de l'usage quotidien d'Auto-Prospect par des
+          marchands et mandataires ; elles ne constituent pas une statistique de marché.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <SubPageCTA
+    title="Contactez chaque vendeur sans y passer vos journées"
+    subtitle="Détection automatique, contact par messagerie Leboncoin, WhatsApp ou vocal, CRM intégré, dès 69 € HT/mois. Essai gratuit 5 jours."
+  />
+  <Footer />
+  <CalendlyWidget />
+</Layout>
