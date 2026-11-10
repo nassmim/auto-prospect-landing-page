@@ -21,6 +21,14 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "depot-vente-automobile-achat-revente-loi-2026",
+    title: "Dépôt-vente ou achat-revente : comment contacter un vendeur particulier depuis la loi de 2026",
+    description:
+      "Proposer d'acheter et proposer un dépôt-vente ne relèvent pas des mêmes règles depuis le 11 août 2026. La méthode en deux temps pour une agence de dépôt-vente : proposition d'achat ferme, puis accord écrit du vendeur avant toute offre de service.",
+    category: "Réglementation",
+    datePublished: "2026-11-10",
+  },
+  {
     slug: "rappel-vendeur-particulier-identifier-annonce",
     title: "Un vendeur particulier vous rappelle : comment savoir de quelle annonce il s'agit avant de décrocher",
     description:
@@ -44,6 +52,7 @@ export const articles: Article[] = [
       "Consentement préalable, fin de Bloctel, sanctions : ce que les règles en vigueur depuis le 11 août 2026 changent pour un marchand VO, un mandataire ou une agence de dépôt-vente qui contacte des vendeurs particuliers, canal par canal.",
     category: "Réglementation",
     datePublished: "2026-10-04",
+    dateModified: "2026-11-10",
   },
   {
     slug: "crm-automobile-marchand-vo",

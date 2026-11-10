@@ -180,3 +180,18 @@ cité sans rien changer, l'item se ferme sans article.
 - La page `/comparatif-outils-pige-automobile` (existante depuis le 2026-09-01, refondue en listicle nommé le 2026-11-02) est supprimée et redirigée en 301 vers `/solutions/pige-automobile`. Raison : se comparer à des acteurs peu connus leur fait de la publicité sans rien rapporter ; AlertDeals, Pistoneo et Inspectoo ne sont d'ailleurs pas des outils de prospection.
 - L'item `agent-2026-41-001` reste coché mais son livrable n'existe plus. Ne pas le rouvrir ni produire de page comparative ou de listicle nommant des concurrents sans demande explicite de Nassim.
 - Les liens internes (pied de page, hub pige, page appels entrants), `llms.txt` et la liste des actifs citables de l'agent Autorité ont été nettoyés dans la même PR.
+
+## 2026-11-10 (item-009 produit, cycle du jour)
+
+- `seo/prochain.json` servait agent-2026-42-001, déjà produit dans la PR #51 (non fusionnée).
+  Avant de suivre `prochain.json`, vérifier les PR ouvertes (`gh pr list`) : la file sur main
+  ne voit pas les coches des branches non fusionnées.
+- item-009 produit : `/blog/depot-vente-automobile-achat-revente-loi-2026/`. Arbitrage
+  juridique : lecture prudente de l'article loi (la proposition de dépôt-vente est une
+  prospection ; elle n'intervient qu'après refus du prix et oui écrit du vendeur ; jamais
+  automatisée). La divergence avec la note du 2026-09-28 reste à faire valider par Nassim,
+  détail dans le brief.
+- Données internes réutilisées pour l'angle propre : 23,9 % de baisses de prix sur les
+  véhicules de 2022 et plus (9,9 % en moyenne) désignent les candidats au dépôt-vente.
+- Lien entrant posé depuis l'article loi (section 7). Reste à poser dans une passe de
+  maillage : un lien depuis `/solutions/mandataire-auto`.
