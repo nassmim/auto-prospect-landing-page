@@ -29,7 +29,7 @@ concurrency:
 env:
   PACK_REPO: nassmim/agents-claude-marketing
   # Version du pack utilisée par CE projet : on ne la change que volontairement.
-  PACK_REF: d5f40985ae0bf26c33894973263f9cf12758d0f7
+  PACK_REF: ed9cfe36e95b84a0ea3e7b93a77153b716938ffa
   CLAUDE_CODE_VERSION: "2.1.302"
   TREG_VERSION: "0.20.0"
 
