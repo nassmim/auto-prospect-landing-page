@@ -4,8 +4,14 @@ name: agents-marketing
 # Horaires en UTC. Secrets attendus : ANTHROPIC_API_KEY, TREG_TOKEN, PACK_TOKEN.
 on:
   schedule:
-    - cron: "0 8 * * 0"
-    - cron: "0 5 * * 1"
+    # GitHub peut retarder ou abandonner les crons posés pile à l'heure : on évite les minutes 00.
+    # TEST ponctuel : article le mardi 10 novembre 2026 à 14h50 UTC, pour vérifier que le
+    # déclenchement automatique fonctionne. Une fois validé, remplacer par le cron hebdomadaire
+    # de l'article (dimanche, minute 17 : "17 8 * * 0") et adapter la condition de la matrice.
+    - cron: "50 14 10 11 *"
+    - cron: "23 5 * * 1"
+    # Rattrapage : le lundi, relance l'article s'il n'y a eu aucune PR d'article cette semaine.
+    - cron: "41 9 * * 1"
   workflow_dispatch:
     inputs:
       agent:
@@ -31,6 +37,7 @@ env:
 
 jobs:
   agent:
+    if: github.event.schedule != '41 9 * * 1'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     defaults:
@@ -40,7 +47,7 @@ jobs:
       fail-fast: false
       max-parallel: 1
       matrix:
-        agent: ${{ fromJSON(github.event_name == 'workflow_dispatch' && format('["{0}"]', inputs.agent) || (github.event.schedule == '0 8 * * 0' && '["article"]' || '["mesure","autorite"]')) }}
+        agent: ${{ fromJSON(github.event_name == 'workflow_dispatch' && format('["{0}"]', inputs.agent) || (github.event.schedule == '23 5 * * 1' && '["mesure","autorite"]' || '["article"]')) }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -120,3 +127,26 @@ jobs:
             ${{ runner.temp }}/rapport-${{ matrix.agent }}.md
           if-no-files-found: ignore
           retention-days: 60
+
+  # Filet de sécurité : si un cron a été abandonné par GitHub, aucune PR d'article n'existe
+  # cette semaine ; on relance alors l'agent article nous-mêmes.
+  rattrapage:
+    if: github.event.schedule == '41 9 * * 1'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Relancer l'article s'il manque
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          depuis=$(date -u -d '6 days ago' +%Y-%m-%dT%H:%M:%SZ)
+          n=$(gh pr list --repo "$GITHUB_REPOSITORY" --state all --limit 50 --json headRefName,createdAt \
+            --jq "[.[] | select(.headRefName | startswith(\"geo/blog-\")) | select(.createdAt >= \"$depuis\")] | length")
+          echo "PR d'article depuis $depuis : $n"
+          if [ "$n" = "0" ]; then
+            echo "Aucun article cette semaine : relance de l'agent article."
+            gh workflow run agents-marketing.yml --repo "$GITHUB_REPOSITORY" -f agent=article
+          fi

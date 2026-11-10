@@ -11,6 +11,7 @@ Règles impératives (déjà validées par l'utilisateur, ne pas redemander) :
 - Voix : vouvoiement, ton direct et professionnel, aucun tiret cadratin, pas d'emoji.
 - L'auteur des articles est « L'équipe Auto-Prospect » (persona simple choisi par l'utilisateur) : schema author de type Organization, jamais de personne nommée.
 - Crée une branche dédiée depuis main à jour (git pull d'abord), écris l'article dans src/pages/blog/<slug>.astro en imitant src/pages/blog/prospection-automobile-methode.astro, ajoute l'entrée dans src/data/articles.ts et dans public/llms.txt, vérifie le build (`pnpm build`) et qu'aucune ligne ne dépasse 500 caractères (CI) avant de committer.
+- Nomme cette branche `geo/blog-AAAA-MM-JJ` (date du jour) : un contrôle automatique du lundi s'appuie sur ce préfixe pour savoir si l'article de la semaine existe.
 - Ouvre une Pull Request NORMALE, PAS en brouillon (`gh pr create`, sans --draft). Ne fusionne jamais toi-même : c'est le geste de l'utilisateur.
 - Mets à jour .claude/geo/content-inventory.md, coche l'item dans la file et ajoute la ligne au registre (seo/registre.csv via registre.py).
 - Si la file (.claude/geo/queue/, items non cochés) est vide, relance keyword-pipeline pour en générer de nouveaux plutôt que de produire un article générique.
