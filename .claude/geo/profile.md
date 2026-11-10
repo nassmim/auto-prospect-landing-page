@@ -103,6 +103,7 @@ Voir `competitors.md` dans ce dossier. Résumé (repris du projet frère AlertDe
 - **Tutoiement ou vouvoiement** : vouvoiement (« Automatisez votre prospection », « vous n'avez plus qu'à répondre »), à la différence d'AlertDeals qui tutoie
 - **Ton** : direct, professionnel, orienté gain de temps et volume de deals ; chiffres concrets ; comparatif « honnête » sans dénigrer les concurrents par nom
 - **Interdits** : pas d'emoji dans le corps de texte ; pas de promesse de gain garanti ; ne jamais nommer un concurrent sans fact-check humain ; pas de marqueur `[À CONFIRMER]`/TODO dans un contenu publié ; **ne jamais nommer un fournisseur, une API ou un service technique qu'Auto-Prospect utilise** (voir § 15)
+- **Liens** (RÈGLE ABSOLUE, Nassim, 2026-11-10) : dans tous les articles de blog, aucun lien ne doit faire quitter la page de l'utilisateur. Tous les liens, internes comme externes, s'ouvrent dans un nouvel onglet : `target="_blank" rel="noopener noreferrer"`. Dans une page `.astro`, mettre ces deux attributs sur chaque balise `<a>` du corps de l'article, de la FAQ et des encadrés. Les retouches d'articles existants appliquent la même règle.
 - **Exemple de page qui incarne la voix** : `src/pages/comparatif-outils-pige-automobile.astro` (section « Un comparatif honnête ») et `src/pages/solutions/pige-automobile.astro`
 
 ## 10. Site et stack
