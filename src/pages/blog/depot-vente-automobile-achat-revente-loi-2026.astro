@@ -1,0 +1,516 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import CalendlyWidget from "../../components/CalendlyWidget.astro";
+import SubPageCTA from "../../components/SubPageCTA.astro";
+import { APP_LOGIN_URL } from "../../lib/api";
+import "../../styles/global.css";
+
+const title =
+  "Dépôt-vente ou achat-revente : comment contacter un vendeur particulier depuis la loi de 2026 | Auto-Prospect";
+const description =
+  "Agence de dépôt-vente automobile : pourquoi proposer d'acheter et proposer un mandat ne relèvent pas des mêmes règles depuis le 11 août 2026, et la méthode en deux temps pour contacter un vendeur particulier sans démarchage illicite.";
+
+const datePublished = "2026-11-10";
+const dateModified = "2026-11-10";
+
+const siteOrigin = Astro.site?.origin ?? "https://auto-prospect.fr";
+const canonical = `${siteOrigin}/blog/depot-vente-automobile-achat-revente-loi-2026/`;
+
+// Offre d'achat et proposition de dépôt-vente, comparées point par point.
+const comparaison = [
+  {
+    point: "Ce que vous dites au vendeur",
+    achat: "« Je souhaite acheter votre véhicule »",
+    depot: "« Je vous propose de vendre votre véhicule pour vous »",
+  },
+  {
+    point: "Nature du message",
+    achat: "Réponse à l'offre publique du vendeur",
+    depot: "Promotion d'un service rémunéré par une commission",
+  },
+  {
+    point: "Qualification probable",
+    achat: "Hors prospection commerciale, selon la définition des textes",
+    depot: "Prospection commerciale",
+  },
+  {
+    point: "Appel téléphonique",
+    achat: "Envisageable, de préférence après une réponse écrite",
+    depot: "Seulement avec le consentement préalable du vendeur (article L223-1 du Code de la consommation)",
+  },
+  {
+    point: "Message envoyé par un outil (WhatsApp, vocal sur répondeur)",
+    achat: "Possible s'il reste centré sur l'achat du véhicule de l'annonce",
+    depot: "Consentement préalable exigé (article L34-5 du Code des postes et des communications électroniques)",
+  },
+  {
+    point: "Propriété du véhicule",
+    achat: "Elle vous est transférée à l'achat",
+    depot: "Le vendeur reste propriétaire jusqu'à la vente",
+  },
+];
+
+// La méthode en deux temps : chaque étape est aussi un HowToStep dans le JSON-LD.
+const etapes = [
+  {
+    nom: "Choisir des annonces que vous êtes prêt à acheter",
+    texte:
+      "La séquence ne tient que si l'intention d'achat est réelle. Ne retenez que des véhicules que vous savez revendre, dans les zones où vous vous déplacez, et comparez chaque annonce au prix du marché avant d'écrire.",
+  },
+  {
+    nom: "Écrire un premier message centré sur l'achat",
+    texte:
+      "Sur la messagerie de la plateforme ou sur le canal ouvert par l'annonce : qui vous êtes, le véhicule lu dans l'annonce, votre souhait de l'acheter, une question simple. Aucune mention du dépôt-vente à ce stade.",
+  },
+  {
+    nom: "Faire une proposition d'achat ferme",
+    texte:
+      "Quand le vendeur a répondu et que vous avez vu le véhicule ou ses documents, chiffrez votre offre et tenez-la. C'est une vraie proposition, pas un prétexte : beaucoup de vendeurs l'acceptent, et l'affaire s'arrête là.",
+  },
+  {
+    nom: "En cas de refus du prix, demander l'accord du vendeur",
+    texte:
+      "Si le vendeur refuse votre prix, ne lui présentez pas votre service d'office. Demandez-lui par écrit s'il souhaite qu'on lui présente une autre façon de vendre, et attendez sa réponse.",
+  },
+  {
+    nom: "Présenter le dépôt-vente seulement après un oui écrit",
+    texte:
+      "Le vendeur accepte : présentez votre offre d'accompagnement, par écrit ou par téléphone s'il l'a demandé expressément. Conservez l'échange daté qui montre son accord. Sans réponse ou face à un non, la conversation s'arrête.",
+  },
+];
+
+const faq = [
+  {
+    q: "Une agence de dépôt-vente automobile peut-elle encore contacter des vendeurs particuliers depuis le 11 août 2026 ?",
+    a: "Oui, mais pas de n'importe quelle façon. Proposer un dépôt-vente est la promotion d'un service : par téléphone, cela exige le consentement préalable du vendeur depuis le 11 août 2026, et par message envoyé par un outil, le consentement était déjà exigé avant. La voie praticable consiste à répondre à l'annonce pour acheter le véhicule, puis à ne présenter le dépôt-vente qu'au vendeur qui refuse votre prix et accepte par écrit d'en entendre parler.",
+  },
+  {
+    q: "Quelle différence juridique entre un achat-revente et un dépôt-vente de voiture ?",
+    a: "En achat-revente, le professionnel achète le véhicule, en devient propriétaire, puis le revend pour son compte. En dépôt-vente, le particulier reste propriétaire jusqu'à la vente : il confie son véhicule à un professionnel qui le vend pour lui contre une commission. Le contrat combine un dépôt et un mandat de vente, encadrés par le Code civil (articles 1915 et suivants, puis 1984 et suivants).",
+  },
+  {
+    q: "Proposer un dépôt-vente après un refus de prix, est-ce un contournement de la loi ?",
+    a: "Non, à condition de respecter l'ordre des accords. Ce qui rend le premier contact licite, c'est sa nature : vous répondez à une annonce pour acheter le véhicule. La proposition de service, elle, reste une prospection commerciale, et c'est pour cela qu'elle n'intervient qu'après l'accord écrit du vendeur. Si vous écrivez « je souhaite acheter » sans intention d'acheter, la séquence perd son fondement.",
+  },
+  {
+    q: "Que doit contenir un contrat de dépôt-vente automobile ?",
+    a: "L'identité des parties, la description précise du véhicule (numéro de série, kilométrage, état général, de préférence avec une fiche d'état signée et annexée), le prix de vente, la rémunération du professionnel, ses obligations et la durée du dépôt, avec ses conditions de renouvellement. Un écrit en deux exemplaires originaux est recommandé, même si la loi ne l'impose pas.",
+  },
+  {
+    q: "Quels vendeurs sont les meilleurs candidats au dépôt-vente ?",
+    a: "Ceux dont le prix affiché dépasse ce que vous pouvez payer en achat-revente, et en particulier les propriétaires de véhicules récents. Sur les annonces de particuliers relevées entre juin et septembre 2026, 23,9 % des véhicules de 2022 et plus ont connu une baisse de prix pendant leur diffusion, contre 9,9 % en moyenne : ce sont des vendeurs qui n'ont pas trouvé preneur au prix demandé.",
+  },
+  {
+    q: "Peut-on automatiser la proposition de dépôt-vente ?",
+    a: "Le premier message, centré sur l'achat, peut être envoyé automatiquement. La proposition de dépôt-vente ne doit pas l'être : elle intervient au cas par cas, dans une conversation où le vendeur a répondu et a accepté qu'on lui présente une autre solution. Un envoi automatique d'offres de service vers des vendeurs qui n'ont rien demandé est précisément ce que les textes interdisent.",
+  },
+];
+
+const sources = [
+  {
+    label: "L'argus, « Comment établir un contrat de dépôt-vente automobile ? »",
+    url: "https://www.largus.fr/actualite-automobile/etablir-un-contrat-de-depot-vente-13424.html",
+  },
+  {
+    label:
+      "CNIL, « Prospection commerciale par téléphone (hors automate d'appel) : quelles sont les règles ? » (mise à jour du 10 juin 2026)",
+    url: "https://www.cnil.fr/fr/prospection-commerciale-par-telephone-hors-automate-dappel-quelles-sont-les-regles",
+  },
+  {
+    label:
+      "CNIL, « La prospection commerciale par courrier électronique, SMS-MMS et automate d'appel » (mise à jour du 10 juin 2026)",
+    url: "https://www.cnil.fr/fr/la-prospection-commerciale-par-automates-dappel",
+  },
+  {
+    label: "Code de la consommation, article L223-1, version en vigueur au 11 août 2026 (Légifrance)",
+    url: "https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006069565/",
+  },
+  {
+    label:
+      "Données internes Auto-Prospect, 35 122 annonces de particuliers sur Leboncoin, AutoScout24 et La Centrale, 1er juin au 25 septembre 2026",
+    url: `${siteOrigin}/blog/statistiques-annonces-voitures-occasion-particuliers-2026/`,
+  },
+];
+
+const jsonLd = [
+  {
+    "@type": "BlogPosting",
+    "headline": "Dépôt-vente ou achat-revente : comment contacter un vendeur particulier depuis la loi de 2026",
+    "description": description,
+    "url": canonical,
+    "mainEntityOfPage": canonical,
+    "datePublished": datePublished,
+    "dateModified": dateModified,
+    "inLanguage": "fr-FR",
+    "author": { "@type": "Organization", "name": "L'équipe Auto-Prospect", "url": siteOrigin },
+    "publisher": { "@type": "Organization", "name": "Auto-Prospect", "url": siteOrigin, "logo": `${siteOrigin}/logo.svg` },
+  },
+  {
+    "@type": "HowTo",
+    "name": "Comment contacter un vendeur particulier en deux temps : proposition d'achat, puis dépôt-vente",
+    "step": etapes.map((e, i) => ({
+      "@type": "HowToStep",
+      "position": i + 1,
+      "name": e.nom,
+      "text": e.texte,
+    })),
+  },
+  {
+    "@type": "FAQPage",
+    "mainEntity": faq.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a },
+    })),
+  },
+  {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": `${siteOrigin}/` },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${siteOrigin}/blog/` },
+      { "@type": "ListItem", "position": 3, "name": "Dépôt-vente ou achat-revente", "item": canonical },
+    ],
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <Navbar />
+  <main class="mx-auto max-w-3xl px-4 pt-32 pb-20 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-widest text-accent">
+      <a href="/blog/" class="text-text-secondary transition-colors hover:text-text">Blog</a>
+      <span class="text-text-secondary"> / </span>Réglementation
+    </p>
+    <h1 class="mt-3 text-3xl font-bold sm:text-4xl">
+      Dépôt-vente ou achat-revente : comment contacter un vendeur particulier depuis la loi de 2026
+    </h1>
+    <p class="mt-4 text-sm text-text-secondary">
+      Par <span class="font-semibold text-text">L'équipe Auto-Prospect</span>. Publié le 10 novembre 2026.
+    </p>
+
+    <div class="mt-8 rounded-2xl border border-border bg-card p-6">
+      <p class="text-sm font-semibold">En bref</p>
+      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-relaxed text-text-secondary">
+        <li>
+          Proposer d'<strong class="text-text">acheter</strong> un véhicule en réponse à une annonce et proposer un
+          <strong class="text-text">dépôt-vente</strong> ne relèvent pas des mêmes règles : le premier répond à l'offre du
+          vendeur, le second promeut un service.
+        </li>
+        <li>
+          Depuis le 11 août 2026, appeler un vendeur particulier pour lui proposer un dépôt-vente exige son consentement
+          préalable. Par message envoyé par un outil, ce consentement était déjà exigé.
+        </li>
+        <li>
+          La méthode qui tient : un premier contact centré sur l'achat, une proposition d'achat ferme, puis, si le vendeur
+          refuse le prix, une question écrite avant toute présentation du dépôt-vente.
+        </li>
+        <li>
+          Elle ne fonctionne que si vous achetez vraiment. C'est ce qui relie l'achat-revente et le dépôt-vente au lieu de
+          forcer l'un à imiter l'autre.
+        </li>
+      </ul>
+    </div>
+
+    <div class="mt-10 space-y-12 text-text-secondary">
+      <!-- 1. Le problème -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Pourquoi les agences de dépôt-vente sont-elles les plus touchées par la loi du 11 août 2026 ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Une agence de dépôt-vente automobile vit de mandats : un particulier lui confie son véhicule, elle le vend pour lui
+          et prend une commission. Pendant des années, une partie de ces mandats est venue des annonces en ligne. Un
+          conseiller repérait une annonce sur Leboncoin, appelait le vendeur et lui proposait de s'occuper de la vente.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Cet appel est exactement ce que la loi vise depuis le 11 août 2026. L'article L223-1 du Code de la consommation
+          interdit désormais de démarcher par téléphone un consommateur qui n'a pas donné son consentement préalable, et le
+          vendeur particulier qui cède sa voiture personnelle est un consommateur. Bloctel a disparu, le silence vaut refus,
+          et la preuve du consentement incombe au professionnel. Le cadre complet, canal par canal, est détaillé dans notre
+          article sur
+          <a href="/blog/loi-11-aout-2026-demarchage-prospection-vendeurs-particuliers/" class="text-accent hover:underline">la loi sur le démarchage téléphonique et les vendeurs particuliers</a>.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Beaucoup d'agences en ont tiré une conclusion hâtive : il faudrait revenir à l'achat-revente, le métier qu'elles
+          avaient justement quitté pour ne plus porter de stock. Ce n'est pas nécessaire. Ce qu'il faut changer, c'est
+          l'ordre et la nature de ce que vous dites au vendeur.
+        </p>
+      </section>
+
+      <!-- 2. La différence juridique -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Proposer d'acheter ou proposer un dépôt-vente : qu'est-ce qui change juridiquement ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Les textes définissent la prospection comme un message destiné à promouvoir des biens ou des services. Le
+          particulier qui publie une annonce émet lui-même une offre : il cherche un acheteur. Le professionnel qui lui
+          répond « je souhaite acheter votre véhicule » ne lui vend rien, il répond à cette offre. Celui qui lui écrit « je
+          vous propose de vendre votre voiture pour vous » lui présente un service rémunéré. Le canal peut être le même, le
+          message n'a pas la même nature.
+        </p>
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full border-collapse text-left text-sm">
+            <thead>
+              <tr class="border-b border-border">
+                <th class="py-3 pr-4 font-medium">Point</th>
+                <th class="py-3 pr-4 font-medium">Proposition d'achat</th>
+                <th class="py-3 font-medium">Proposition de dépôt-vente</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+              {
+                comparaison.map((c) => (
+                  <tr>
+                    <td class="py-3 pr-4 font-medium text-text">{c.point}</td>
+                    <td class="py-3 pr-4">{c.achat}</td>
+                    <td class="py-3">{c.depot}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-4 leading-relaxed">
+          Une réserve s'impose. Cette lecture découle des définitions légales. À notre connaissance, aucune décision de
+          justice ni aucune position publiée de la DGCCRF ou de la CNIL ne tranche expressément le cas d'un professionnel
+          qui répond à l'annonce d'un particulier. Elle ne vaut pas garantie, et un avis juridique sur vos propres
+          pratiques reste utile.
+        </p>
+      </section>
+
+      <!-- 3. La méthode -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Comment contacter un vendeur en deux temps, étape par étape ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          La méthode s'adresse aux structures qui font les deux métiers, ou qui sont prêtes à les faire : acheter quand le
+          prix le permet, accompagner la vente quand il ne le permet pas. Elle tient en cinq étapes.
+        </p>
+        <ol class="mt-5 space-y-3">
+          {
+            etapes.map((e, i) => (
+              <li class="rounded-xl border border-border bg-card p-5">
+                <p class="font-semibold text-text">{i + 1}. {e.nom}</p>
+                <p class="mt-2 text-sm leading-relaxed">{e.texte}</p>
+              </li>
+            ))
+          }
+        </ol>
+
+        <h3 class="mt-8 font-semibold text-text">Le premier message : l'achat, rien d'autre</h3>
+        <p class="mt-2 leading-relaxed">
+          Le premier message porte sur le véhicule de l'annonce et sur votre souhait de l'acheter. Il vous identifie comme
+          professionnel, dès la première ligne : se présenter comme un particulier est une pratique commerciale trompeuse.
+          Il ne mentionne ni dépôt-vente, ni mandat, ni financement. Exemple, à adapter :
+        </p>
+        <blockquote class="mt-3 rounded-xl border border-border bg-card p-5 text-sm leading-relaxed">
+          « Bonjour, je suis [prénom], de [société], professionnel de l'automobile à [ville]. Votre véhicule m'intéresse
+          pour un achat. Je peux me déplacer cette semaine pour le voir. Quel moment vous conviendrait ? »
+        </blockquote>
+        <p class="mt-3 leading-relaxed">
+          Le choix du canal compte autant que le texte. La messagerie de la plateforme est le canal que le vendeur a
+          lui-même ouvert ; WhatsApp et le message vocal sur répondeur fonctionnent aussi, à condition de rester sur
+          l'achat. Les forces et les limites de chaque canal sont détaillées dans notre guide sur
+          <a href="/blog/whatsapp-message-vocal-vendeurs-particuliers-voiture/" class="text-accent hover:underline">WhatsApp et le message vocal pour contacter les vendeurs particuliers</a>.
+        </p>
+
+        <h3 class="mt-6 font-semibold text-text">La proposition d'achat : ferme, chiffrée, tenue</h3>
+        <p class="mt-2 leading-relaxed">
+          Une fois le véhicule vu, ou au moins ses documents et ses photos examinés, vous faites une offre. Elle est ferme :
+          un montant, un mode de paiement, un délai. C'est elle qui donne son sens à toute la séquence. Une partie des
+          vendeurs l'accepte, et vous achetez. Les autres la refusent, souvent parce qu'ils espèrent davantage que ce qu'un
+          professionnel peut payer pour revendre avec une marge.
+        </p>
+
+        <h3 class="mt-6 font-semibold text-text">Après un refus : une question, pas une présentation</h3>
+        <p class="mt-2 leading-relaxed">
+          C'est ici que le dépôt-vente entre en jeu, et c'est ici que la plupart des erreurs se commettent. Le vendeur a
+          refusé votre prix ; il n'a pas demandé qu'on lui présente un service. Avant de le faire, posez la question, par
+          écrit, dans la conversation en cours :
+        </p>
+        <blockquote class="mt-3 rounded-xl border border-border bg-card p-5 text-sm leading-relaxed">
+          « Je comprends, mon offre ne correspond pas au prix que vous visez. Nous proposons aussi d'accompagner des
+          particuliers dans la vente de leur véhicule, sans l'acheter. Souhaitez-vous que je vous explique comment cela
+          fonctionne, par message ou par téléphone ? »
+        </blockquote>
+        <p class="mt-3 leading-relaxed">
+          Un oui écrit, daté, dans un échange qui identifie votre société, vous permet de présenter votre offre et, si le
+          vendeur le demande, de l'appeler. Conservez cet échange : en cas de contrôle, c'est à vous de prouver le
+          consentement. Un non, ou pas de réponse, et la conversation s'arrête là. Pas de relance sur le dépôt-vente,
+          pas de rappel quelques semaines plus tard.
+        </p>
+      </section>
+
+      <!-- CTA intermédiaire contextualisé -->
+      <aside class="rounded-2xl border border-accent/30 bg-gradient-to-b from-accent/10 to-transparent p-6 sm:p-8">
+        <p class="text-lg font-bold text-text">Le premier temps, sans y passer vos journées</p>
+        <p class="mt-2 leading-relaxed">
+          Auto-Prospect détecte les annonces de particuliers sur Leboncoin, AutoScout24 et La Centrale, compare chaque
+          annonce au prix du marché et envoie votre premier message d'achat par messagerie Leboncoin, WhatsApp ou message
+          vocal. Les vendeurs qui répondent arrivent dans votre CRM : la proposition ferme, et la suite, restent à votre main.
+        </p>
+        <div class="mt-5">
+          <a
+            href={APP_LOGIN_URL}
+            data-cta="blog-depot-vente-achat-revente"
+            class="inline-block rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-bg shadow-lg shadow-accent/25 transition-all hover:bg-accent-hover hover:shadow-accent/40"
+          >
+            Essayer gratuitement pendant 5 jours
+          </a>
+        </div>
+      </aside>
+
+      <!-- 4. Les bons candidats -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Quels vendeurs sont de bons candidats au dépôt-vente ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Le vendeur qui refuse votre offre d'achat n'est pas un échec de prospection : c'est souvent un vendeur dont le prix
+          est au-dessus de ce qu'un professionnel peut payer. Nos propres données le montrent. Sur 35 122 annonces de
+          particuliers relevées sur Leboncoin, AutoScout24 et La Centrale entre le 1er juin et le 25 septembre 2026,
+          <strong class="text-text">9,9 % ont connu une baisse de prix</strong> pendant leur diffusion. Pour les véhicules
+          de 2022 et plus, la proportion monte à <strong class="text-text">23,9 %</strong> : près d'un vendeur sur quatre
+          n'a pas trouvé preneur au prix de départ.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Ces vendeurs ont un véhicule récent, une valeur élevée, et une attente de prix qui ne colle pas avec une marge
+          d'achat-revente. C'est précisément le profil pour lequel un dépôt-vente a du sens : le vendeur peut viser un prix
+          plus proche du marché de détail, et votre commission porte sur un montant élevé. À l'inverse, un véhicule ancien
+          affiché sous le marché se traite en achat direct, sans détour. L'écart au marché de chaque annonce, visible avec
+          l'<a href="/fonctionnalites/analyse-prix-marche/" class="text-accent hover:underline">analyse prix vs marché</a>,
+          vous dit avant le premier message vers quelle issue l'échange a des chances d'aller. Le détail par tranche d'âge
+          est dans nos
+          <a href="/blog/statistiques-annonces-voitures-occasion-particuliers-2026/" class="text-accent hover:underline">16 statistiques sur les annonces de particuliers en 2026</a>.
+        </p>
+      </section>
+
+      <!-- 5. Ce que la méthode n'est pas -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Cette séquence est-elle un moyen de contourner la loi ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Non, et il faut le dire clairement. Ce qui rend le premier contact licite, ce n'est pas l'ordre des propositions,
+          c'est sa nature : vous répondez à une annonce parce que vous voulez acheter le véhicule. Si l'intention d'achat
+          est fictive, si la « proposition » n'est qu'un prétexte pour ouvrir une conversation sur le mandat, le message est
+          une prospection déguisée, et la séquence perd son fondement.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          La proposition de service, elle, reste une prospection commerciale, quel que soit le moment où elle arrive. C'est
+          pour cela qu'elle passe par l'accord écrit du vendeur. Trois pratiques la font basculer du mauvais côté :
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 leading-relaxed">
+          <li>
+            <strong class="text-text">Glisser le dépôt-vente dans le premier message</strong>, même en
+            post-scriptum : le message promeut alors un service dès le départ.
+          </li>
+          <li>
+            <strong class="text-text">Automatiser l'envoi de l'offre de service</strong> à tous les vendeurs qui ont
+            refusé un prix : un envoi automatique de prospection exige un consentement préalable que vous n'avez pas.
+          </li>
+          <li>
+            <strong class="text-text">Appeler sans oui explicite</strong>, au motif que le vendeur a répondu à votre
+            premier message : avoir répondu sur l'achat ne vaut pas accord pour entendre une offre de service.
+          </li>
+        </ul>
+      </section>
+
+      <!-- 6. Le contrat -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Que doit prévoir le contrat de dépôt-vente une fois le vendeur convaincu ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Le dépôt-vente combine un contrat de dépôt et un mandat de vente, encadrés par le Code civil (articles 1915 et
+          suivants pour le dépôt, 1984 et suivants pour le mandat) ; aucune loi propre à l'automobile ne s'y ajoute. Le
+          vendeur reste propriétaire du véhicule jusqu'à la vente. La loi n'impose pas d'écrit, mais L'argus recommande un
+          contrat en deux exemplaires originaux qui précise :
+        </p>
+        <ul class="mt-3 list-disc space-y-1 pl-5 leading-relaxed">
+          <li>l'identité des deux parties ;</li>
+          <li>la description du véhicule : numéro de série, kilométrage, état général, idéalement avec une fiche d'état signée et annexée ;</li>
+          <li>le prix de vente convenu ;</li>
+          <li>votre rémunération, en général une commission sur le prix de vente ;</li>
+          <li>vos obligations et la durée du dépôt, avec ses conditions de renouvellement.</li>
+        </ul>
+        <p class="mt-3 leading-relaxed">
+          Faites relire votre modèle par un professionnel du droit, surtout sur la garantie due à l'acheteur final et sur
+          ce qui se passe si le vendeur trouve lui-même un acheteur pendant le dépôt.
+        </p>
+      </section>
+
+      <!-- 7. Le suivi -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Comment suivre les deux issues sans rien mélanger ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Une structure qui fait de l'achat et du dépôt-vente doit savoir, pour chaque vendeur, où en est l'échange et ce
+          qu'il a accepté. Trois informations par fiche suffisent : l'annonce et la date du premier message, l'offre
+          d'achat faite et la réponse du vendeur, puis, le cas échéant, la date et le texte de son accord pour entendre
+          parler du dépôt-vente. Ce dernier point est votre preuve : il ne doit pas vivre dans la mémoire d'un téléphone.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Au-delà d'une trentaine de vendeurs par semaine, un tableur ne tient plus. Un
+          <a href="/fonctionnalites/crm-pipeline-vente/" class="text-accent hover:underline">CRM avec pipeline</a>
+          vous montre qui a répondu, qui attend une offre et qui a refusé. Notre
+          <a href="/blog/crm-automobile-marchand-vo/" class="text-accent hover:underline">guide du CRM automobile pour marchand VO</a>
+          détaille les étapes et les indicateurs à suivre. Pour la méthode de prospection elle-même, du périmètre de
+          recherche aux relances, voir
+          <a href="/blog/prospection-automobile-methode/" class="text-accent hover:underline">la méthode pour trouver et contacter des vendeurs particuliers</a>.
+          Et si vous sourcez aussi pour le compte de clients acheteurs, la page
+          <a href="/solutions/mandataire-auto/" class="text-accent hover:underline">Auto-Prospect pour les mandataires auto</a>
+          décrit comment chaque mandat devient une recherche automatique.
+        </p>
+      </section>
+
+      <!-- FAQ -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">Questions fréquentes sur le dépôt-vente et la prospection des vendeurs</h2>
+        <div class="mt-4">
+          {
+            faq.map((f) => (
+              <details class="group border-b border-border py-2">
+                <summary class="flex cursor-pointer items-center justify-between py-3 text-sm font-medium text-text sm:text-base [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <span class="ml-4 text-text-secondary transition-transform group-open:rotate-180">⌄</span>
+                </summary>
+                <p class="pb-4 text-sm leading-relaxed">{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Sources -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">Sources</h2>
+        <ul class="mt-3 list-disc space-y-1 pl-5 text-sm">
+          {
+            sources.map((s) => (
+              <li>
+                <a href={s.url} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">{s.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-3 text-xs">
+          Cet article présente une lecture des textes en vigueur au 10 novembre 2026. Il ne constitue pas un conseil
+          juridique.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <SubPageCTA
+    title="Achetez plus souvent au premier message"
+    subtitle="Détection automatique, contact des vendeurs et CRM intégré, dès 69 € HT/mois. Essai gratuit 5 jours."
+  />
+  <Footer />
+  <CalendlyWidget />
+</Layout>

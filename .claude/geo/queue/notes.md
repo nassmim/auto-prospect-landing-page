@@ -217,3 +217,17 @@ cité sans rien changer, l'item se ferme sans article.
   gestion de stock et de multidiffusion, sans nommer d'éditeur. C'est la confusion que fait
   Perplexity sur le prompt « meilleur logiciel de pige ».
 
+## 2026-11-10 (item-009 produit, cycle du jour)
+
+- `seo/prochain.json` servait agent-2026-42-001, déjà produit dans la PR #51 (non fusionnée).
+  Avant de suivre `prochain.json`, vérifier les PR ouvertes (`gh pr list`) : la file sur main
+  ne voit pas les coches des branches non fusionnées.
+- item-009 produit : `/blog/depot-vente-automobile-achat-revente-loi-2026/`. Arbitrage
+  juridique : lecture prudente de l'article loi (la proposition de dépôt-vente est une
+  prospection ; elle n'intervient qu'après refus du prix et oui écrit du vendeur ; jamais
+  automatisée). La divergence avec la note du 2026-09-28 reste à faire valider par Nassim,
+  détail dans le brief.
+- Données internes réutilisées pour l'angle propre : 23,9 % de baisses de prix sur les
+  véhicules de 2022 et plus (9,9 % en moyenne) désignent les candidats au dépôt-vente.
+- Lien entrant posé depuis l'article loi (section 7). Reste à poser dans une passe de
+  maillage : un lien depuis `/solutions/mandataire-auto`.
