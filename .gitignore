@@ -8,7 +8,6 @@ dist/
 .astro/
 
 # Environnement
-.env.local
 .env.*.local
 
 # Divers
@@ -35,5 +34,5 @@ seo/*
 !seo/briefs/
 !seo/briefs/**
 
-.env.local
 .env*.local
+config.bat
