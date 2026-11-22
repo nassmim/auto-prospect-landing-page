@@ -1,0 +1,512 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import CalendlyWidget from "../../components/CalendlyWidget.astro";
+import SubPageCTA from "../../components/SubPageCTA.astro";
+import { APP_LOGIN_URL } from "../../lib/api";
+import "../../styles/global.css";
+
+const title =
+  "Devenir marchand automobile : démarches, outils et premiers achats auprès des particuliers | Auto-Prospect";
+const description =
+  "Déclaration en préfecture, registre de police, W garage, déclaration d'achat, TVA sur la marge : les démarches pour devenir marchand automobile, puis les quatre outils qui permettent de trouver ses premiers véhicules chez les particuliers.";
+
+const datePublished = "2026-11-22";
+const dateModified = "2026-11-22";
+
+const siteOrigin = Astro.site?.origin ?? "https://auto-prospect.fr";
+const canonical = `${siteOrigin}/blog/devenir-marchand-automobile/`;
+
+const reponseCourte =
+  "Pour devenir marchand automobile en France, il faut immatriculer son entreprise, déclarer l'activité de revente d'objets mobiliers en préfecture, tenir un registre de police, demander un certificat W garage et déclarer chaque achat de véhicule dans les quinze jours. Ensuite, le métier se joue sur l'achat : trouver des vendeurs particuliers avant les autres, les contacter et suivre chaque échange jusqu'à la décision.";
+
+// Démarches administratives : texte et source pour chacune.
+const demarches = [
+  {
+    nom: "Immatriculer l'entreprise",
+    quoi: "Création de l'entreprise (entreprise individuelle ou société) sur le guichet unique des formalités d'entreprises.",
+    quand: "Avant le premier achat",
+  },
+  {
+    nom: "Déclarer l'activité en préfecture",
+    quoi: "Inscription sur le registre des revendeurs d'objets mobiliers, auprès de la préfecture ou sous-préfecture du lieu d'activité (en ligne à Paris). Le récépissé se présente lors des contrôles.",
+    quand: "Avant de débuter la revente",
+  },
+  {
+    nom: "Tenir le registre de police",
+    quoi: "Registre des objets mobiliers, aussi appelé registre de police : chaque véhicule acheté, sa description, sa provenance et l'identité du vendeur. Papier coté et paraphé, ou numérique conforme à la norme ISO 14641-1.",
+    quand: "Au jour le jour, dès le premier achat",
+  },
+  {
+    nom: "Demander un certificat W garage",
+    quoi: "Immatriculation provisoire qui permet de faire circuler un véhicule en attente de revente, un seul à la fois. Demande en ligne sur le site de l'ANTS, 13,76 €, valable pour l'année civile.",
+    quand: "Avant de déplacer un véhicule non réimmatriculé",
+  },
+  {
+    nom: "Déclarer chaque achat",
+    quoi: "Déclaration d'achat d'un véhicule d'occasion (cerfa 13751), dans le système d'immatriculation si vous êtes habilité, ou par un intermédiaire habilité sinon.",
+    quand: "Dans les 15 jours suivant l'achat",
+  },
+  {
+    nom: "Choisir le régime de TVA",
+    quoi: "Le régime de la marge (article 297 A du CGI) s'applique aux véhicules achetés à des non-assujettis, donc aux particuliers : la TVA porte sur la différence entre prix de vente et prix d'achat.",
+    quand: "À la création, avec votre expert-comptable",
+  },
+];
+
+// Les quatre outils d'un marchand qui achète chez les particuliers.
+const outils = [
+  {
+    outil: "Détection des annonces",
+    role: "Voir passer les annonces de particuliers qui correspondent à vos critères sur Leboncoin, AutoScout24 et La Centrale",
+    debut: "Alertes enregistrées sur chaque plateforme, consultées plusieurs fois par jour",
+    seuil: "Plus de trois ou quatre recherches, ou plusieurs départements",
+  },
+  {
+    outil: "Analyse de prix",
+    role: "Savoir si l'annonce est sous le prix du marché avant de contacter le vendeur",
+    debut: "Comparaison à la main avec les annonces équivalentes",
+    seuil: "Plus de quelques annonces à trier par jour",
+  },
+  {
+    outil: "Contact des vendeurs",
+    role: "Envoyer le premier message et les relances sur le canal où le vendeur répond",
+    debut: "Messagerie de la plateforme et WhatsApp, un message rédigé par vendeur",
+    seuil: "Plus d'une dizaine de vendeurs à contacter par jour",
+  },
+  {
+    outil: "Suivi des achats (CRM)",
+    role: "Noter chaque vendeur, son statut, la prochaine relance, et mesurer vos taux",
+    debut: "Un tableur avec une ligne par annonce contactée",
+    seuil: "Une trentaine de contacts par semaine, ou un associé",
+  },
+];
+
+// Routine du premier mois : chaque étape est aussi un HowToStep dans le JSON-LD.
+const etapes = [
+  {
+    nom: "Choisir un segment que vous savez revendre",
+    texte:
+      "Deux ou trois modèles, une fourchette d'années et de kilométrage, un prix d'achat plafond et les départements où vous acceptez de vous déplacer. Un segment que vous connaissez vous évite les mauvaises surprises à l'expertise.",
+  },
+  {
+    nom: "Créer trois à cinq recherches précises",
+    texte:
+      "Une recherche par modèle et par zone sur chaque plateforme, ou dans un outil qui couvre les trois. Mieux vaut cinq recherches étroites qu'une recherche large qui remonte des centaines d'annonces inutiles.",
+  },
+  {
+    nom: "Trier chaque annonce par rapport au marché",
+    texte:
+      "Comparez le prix affiché aux annonces équivalentes : même modèle, motorisation, kilométrage proche, même région. Contactez d'abord les annonces sous le marché, puis celles dont le prix vient de baisser.",
+  },
+  {
+    nom: "Contacter le vendeur en vous présentant comme professionnel",
+    texte:
+      "Un message court qui dit qui vous êtes, ce que vous avez lu dans l'annonce et ce que vous proposez, sans prix. Répondre à une annonce publiée n'est pas du démarchage, mais un faux profil de particulier vous ferait perdre la confiance du vendeur dès le premier appel.",
+  },
+  {
+    nom: "Noter et relancer chaque vendeur",
+    texte:
+      "Une ligne par vendeur contacté : canal, date, réponse, prochaine relance. Relancez à 48 heures, puis une semaine plus tard si l'annonce est toujours en ligne.",
+  },
+  {
+    nom: "Inscrire chaque achat le jour même",
+    texte:
+      "Le véhicule acheté entre au registre de police le jour de l'achat, et la déclaration d'achat part dans les 15 jours. Ce sont les deux obligations que les débutants oublient le plus facilement quand le premier achat arrive vite.",
+  },
+];
+
+const faq = [
+  {
+    q: "Comment devenir marchand automobile ?",
+    a: reponseCourte,
+  },
+  {
+    q: "Faut-il un diplôme pour devenir marchand de véhicules d'occasion ?",
+    a: "L'achat-revente de véhicules d'occasion est une activité commerciale : elle ne demande pas de diplôme, à la différence de la réparation automobile, qui exige une qualification professionnelle. Les obligations portent sur la déclaration de l'activité en préfecture, la tenue du registre de police, la déclaration de chaque achat et la garantie due aux acheteurs.",
+  },
+  {
+    q: "Quelle est la différence entre un marchand VO, un négociant VO et un mandataire auto ?",
+    a: "Marchand VO et négociant VO désignent le même métier : acheter des véhicules d'occasion en son nom, les avoir en stock, puis les revendre. Le mandataire auto, lui, n'achète pas pour son compte : il cherche et achète un véhicule pour un client, au nom de ce client, et se rémunère par une commission. L'agence de dépôt-vente, enfin, vend le véhicule du particulier pour son compte sans l'acheter.",
+  },
+  {
+    q: "Un marchand automobile peut-il travailler en micro-entreprise ?",
+    a: "C'est possible, mais le choix du statut dépend surtout du volume d'achats prévu et du régime de TVA. La micro-entreprise ne permet pas de récupérer la TVA sur les achats et son plafond de chiffre d'affaires est vite atteint quand chaque véhicule vaut plusieurs milliers d'euros. Le choix se fait avec un expert-comptable avant la création.",
+  },
+  {
+    q: "Où un marchand automobile trouve-t-il ses véhicules ?",
+    a: "Principalement auprès des particuliers, sur Leboncoin, AutoScout24 et La Centrale : selon AAA Data, les véhicules de plus de cinq ans s'échangent à 55 % entre particuliers en France. Les autres sources sont les reprises lors d'une vente, les enchères professionnelles et le réseau. Pour un marchand qui démarre sans clientèle, les annonces de particuliers sont la seule source régulière accessible dès le premier jour.",
+  },
+  {
+    q: "De quels logiciels un marchand VO a-t-il besoin pour démarrer ?",
+    a: "De quoi trouver les véhicules, pas de quoi gérer un parc qu'il n'a pas encore. Au démarrage, quatre besoins : détecter les annonces de particuliers, comparer leur prix au marché, contacter les vendeurs et suivre chaque échange. Le logiciel de gestion de stock et de multidiffusion des annonces de vente vient ensuite, quand le parc compte assez de véhicules pour le justifier.",
+  },
+];
+
+const sources = [
+  {
+    label: "Service-Public.fr Entreprendre, « Vente de biens d'occasion par des professionnels » (vérifié le 24 avril 2026)",
+    url: "https://entreprendre.service-public.gouv.fr/vosdroits/F39552",
+  },
+  {
+    label: "Service-Public.fr Entreprendre, « Certificat W garage » (vérifié le 1er janvier 2026)",
+    url: "https://entreprendre.service-public.gouv.fr/vosdroits/F22637",
+  },
+  {
+    label: "Service-Public.fr, formulaire cerfa 13751, déclaration d'achat d'un véhicule d'occasion",
+    url: "https://www.formulaires.service-public.gouv.fr/gf/showFormulaireSignaletiqueConsulter.do?numCerfa=13751",
+  },
+  {
+    label: "AAA Data, « Marché automobile français 2025 : les grandes tendances » (juin 2026)",
+    url: "https://www.aaa-data.fr/actualites/marche-automobile-francais-2025-grandes-tendances/",
+  },
+];
+
+const jsonLd = [
+  {
+    "@type": "BlogPosting",
+    "headline": "Devenir marchand automobile : démarches, outils et premiers achats auprès des particuliers",
+    "description": description,
+    "url": canonical,
+    "mainEntityOfPage": canonical,
+    "datePublished": datePublished,
+    "dateModified": dateModified,
+    "inLanguage": "fr-FR",
+    "author": { "@type": "Organization", "name": "L'équipe Auto-Prospect", "url": siteOrigin },
+    "publisher": { "@type": "Organization", "name": "Auto-Prospect", "url": siteOrigin, "logo": `${siteOrigin}/logo.svg` },
+  },
+  {
+    "@type": "HowTo",
+    "name": "Le premier mois d'un marchand automobile qui achète auprès des particuliers",
+    "step": etapes.map((e, i) => ({
+      "@type": "HowToStep",
+      "position": i + 1,
+      "name": e.nom,
+      "text": e.texte,
+    })),
+  },
+  {
+    "@type": "FAQPage",
+    "mainEntity": faq.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a },
+    })),
+  },
+  {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": `${siteOrigin}/` },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${siteOrigin}/blog/` },
+      { "@type": "ListItem", "position": 3, "name": "Devenir marchand automobile", "item": canonical },
+    ],
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <Navbar />
+  <main class="mx-auto max-w-3xl px-4 pt-32 pb-20 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-widest text-accent">
+      <a href="/blog/" target="_blank" rel="noopener noreferrer" class="text-text-secondary transition-colors hover:text-text">Blog</a>
+      <span class="text-text-secondary"> / </span>Guide
+    </p>
+    <h1 class="mt-3 text-3xl font-bold sm:text-4xl">
+      Devenir marchand automobile : démarches, outils et premiers achats auprès des particuliers
+    </h1>
+    <p class="mt-4 text-sm text-text-secondary">
+      Par <span class="font-semibold text-text">L'équipe Auto-Prospect</span>. Publié le 22 novembre 2026.
+    </p>
+
+    <div class="mt-8 rounded-2xl border border-border bg-card p-6">
+      <p class="text-sm font-semibold">La réponse courte</p>
+      <p class="mt-2 text-sm leading-relaxed text-text-secondary">{reponseCourte}</p>
+    </div>
+
+    <div class="mt-6 rounded-2xl border border-border bg-card p-6">
+      <p class="text-sm font-semibold">En bref</p>
+      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-relaxed text-text-secondary">
+        <li>
+          Marchand VO et négociant VO désignent le même métier : acheter des véhicules d'occasion en son nom, puis les
+          revendre. Aucun diplôme n'est exigé, mais six démarches encadrent l'activité.
+        </li>
+        <li>
+          Le défaut de registre de police est un délit : jusqu'à 6 mois d'emprisonnement et 30 000 € d'amende pour une
+          personne physique.
+        </li>
+        <li>
+          Le stock d'un marchand qui démarre vient des particuliers : 55 % des véhicules de plus de cinq ans changent de
+          main entre particuliers selon AAA Data.
+        </li>
+        <li>
+          Quatre outils suffisent pour acheter : détection des annonces, analyse de prix, contact des vendeurs, suivi des
+          achats. La gestion de stock vient après.
+        </li>
+      </ul>
+    </div>
+
+    <div class="mt-10 space-y-12 text-text-secondary">
+      <!-- 1. Le métier -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Marchand automobile, négociant VO, mandataire : de quel métier parle-t-on ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Un marchand automobile, qu'on appelle aussi marchand VO ou négociant VO, achète des véhicules d'occasion en
+          son nom, les a en stock, puis les revend. Il porte le risque : si le véhicule est mal acheté ou met trois mois à
+          partir, c'est sa trésorerie qui attend. Toute la difficulté du métier est donc à l'achat.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Deux métiers voisins s'en distinguent. Le
+          <a href="/solutions/mandataire-auto/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">mandataire auto</a>
+          cherche un véhicule pour un client qui l'a mandaté, et se rémunère par une commission sans acheter pour son
+          compte. L'agence de dépôt-vente vend la voiture d'un particulier pour lui, sans l'acheter ; nous avons détaillé
+          comment elle peut
+          <a href="/blog/depot-vente-automobile-achat-revente-loi-2026/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">combiner dépôt-vente et achat-revente depuis la loi de 2026</a>.
+          Ce guide s'adresse à celui qui achète pour revendre.
+        </p>
+      </section>
+
+      <!-- 2. Démarches -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Quelles démarches pour devenir marchand automobile ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          L'achat-revente de véhicules est une activité commerciale : elle ne demande pas de diplôme, à la différence de
+          la réparation. En revanche, un professionnel qui achète à des particuliers des biens pour les revendre entre dans
+          le régime des revendeurs d'objets mobiliers, et le véhicule ajoute ses propres formalités. Les six démarches à
+          faire, dans l'ordre :
+        </p>
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full border-collapse text-left text-sm">
+            <thead>
+              <tr class="border-b border-border">
+                <th class="py-3 pr-4 font-medium">Démarche</th>
+                <th class="py-3 pr-4 font-medium">Ce qu'elle recouvre</th>
+                <th class="py-3 font-medium">Quand</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+              {
+                demarches.map((d) => (
+                  <tr>
+                    <td class="py-3 pr-4 font-medium text-text">{d.nom}</td>
+                    <td class="py-3 pr-4">{d.quoi}</td>
+                    <td class="py-3">{d.quand}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="mt-8 font-semibold text-text">Le registre de police, l'obligation à ne pas prendre à la légère</h3>
+        <p class="mt-2 leading-relaxed">
+          Le registre des objets mobiliers, que tout le métier appelle registre de police, consigne chaque véhicule acheté,
+          sa provenance et l'identité du vendeur. En version papier, il est coté et paraphé par le commissaire de police
+          ou, à défaut, par le maire, et rempli chaque jour à l'encre indélébile, sans blanc ni rature. En version
+          numérique, le système doit respecter la norme ISO 14641-1 et tracer chaque consultation. Ne pas le tenir, le
+          tenir de façon inexacte ou refuser de le présenter est un délit : 6 mois d'emprisonnement et 30 000 € d'amende
+          pour une personne physique, 150 000 € pour une société, selon Service-Public.fr.
+        </p>
+
+        <h3 class="mt-6 font-semibold text-text">À la revente : ce que vous devez à l'acheteur</h3>
+        <p class="mt-2 leading-relaxed">
+          Quand vous revendez, vous remettez à l'acheteur un écrit qui indique la marque, le type, le modèle, la version,
+          le mois et l'année de première mise en circulation et le kilométrage total. Si le kilométrage réel est inconnu,
+          vous indiquez le relevé du compteur suivi de la mention « non garanti ». Vendu par un professionnel à un
+          consommateur, le véhicule est aussi couvert par la garantie légale de conformité pendant deux ans ; pour un bien
+          d'occasion, le défaut qui apparaît dans les douze premiers mois est présumé exister au jour de la vente. C'est une
+          raison de plus de bien expertiser avant d'acheter.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Le statut juridique et le régime de TVA se choisissent avec un expert-comptable, en fonction du volume d'achats
+          prévu. Le calcul de la marge par véhicule et de la rotation du stock est un sujet à part entière, que traite notre
+          outil frère
+          <a href="https://alertdeals.fr" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">AlertDeals</a>.
+          La suite de ce guide porte sur l'autre moitié du métier : trouver les véhicules.
+        </p>
+      </section>
+
+      <!-- 3. Où trouver -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Où un marchand qui démarre trouve-t-il ses premiers véhicules ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Un marchand installé a des reprises, des apporteurs, un accès aux enchères professionnelles. Celui qui démarre
+          n'a rien de tout cela. Il lui reste une source accessible dès le premier jour, et c'est la plus large : les
+          particuliers. Selon AAA Data, 5,4 millions de véhicules d'occasion ont changé de main en France en 2025, et ceux
+          de plus de cinq ans s'échangent à 55 % entre particuliers. Ces ventes passent par Leboncoin, AutoScout24 et
+          La Centrale.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Nos propres données donnent l'ordre de grandeur de ce gisement. Sur 35 122 annonces de particuliers relevées
+          sur les trois plateformes entre le 1er juin et le 25 septembre 2026, le prix médian est de 9 300 €, le
+          kilométrage médian de 136 000 km et l'âge médian de 11 ans (données internes Auto-Prospect). Parmi les annonces
+          dont le prix a pu être estimé, 30,3 % se situent sous le prix du marché. Le détail est dans nos
+          <a href="/blog/statistiques-annonces-voitures-occasion-particuliers-2026/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">16 statistiques sur les annonces de particuliers en 2026</a>.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Les bonnes affaires existent donc, mais vous n'êtes pas seul à les chercher. Le marchand qui achète est celui qui
+          voit l'annonce tôt, juge vite le prix et contacte le vendeur le premier, avec un message qui donne envie de le
+          rappeler. C'est une méthode, que nous décrivons pas à pas dans notre guide de la
+          <a href="/blog/prospection-automobile-methode/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">prospection automobile auprès des vendeurs particuliers</a>.
+        </p>
+      </section>
+
+      <!-- 4. Outils -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          De quels outils un marchand VO a-t-il besoin pour acheter ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Quatre besoins, que vous pouvez couvrir à la main au début. Le tableau indique à partir de quand la main ne
+          suit plus.
+        </p>
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full border-collapse text-left text-sm">
+            <thead>
+              <tr class="border-b border-border">
+                <th class="py-3 pr-4 font-medium">Outil</th>
+                <th class="py-3 pr-4 font-medium">À quoi il sert</th>
+                <th class="py-3 pr-4 font-medium">Au démarrage</th>
+                <th class="py-3 font-medium">La main ne suit plus quand</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+              {
+                outils.map((o) => (
+                  <tr>
+                    <td class="py-3 pr-4 font-medium text-text">{o.outil}</td>
+                    <td class="py-3 pr-4">{o.role}</td>
+                    <td class="py-3 pr-4">{o.debut}</td>
+                    <td class="py-3">{o.seuil}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="mt-8 font-semibold text-text">Outil d'achat ou logiciel de gestion de stock : ne pas confondre</h3>
+        <p class="mt-2 leading-relaxed">
+          Quand on cherche un « logiciel pour marchand VO », on tombe d'abord sur des logiciels de gestion de stock : fiche
+          véhicule, frais de remise en état, multidiffusion des annonces de vente, facturation, parfois registre de police
+          numérique. Ils sont utiles, mais ils commencent quand le véhicule est déjà acheté. Ils ne vous disent pas quelle
+          annonce sort aujourd'hui dans votre zone, ni quel vendeur n'a pas encore été contacté.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          L'outil d'achat fait l'inverse. Un
+          <a href="/solutions/pige-automobile/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">outil de pige automobile</a>
+          détecte les annonces de particuliers selon vos critères ; les plus complets les comparent au marché, contactent
+          les vendeurs et rangent chaque échange dans un
+          <a href="/blog/crm-automobile-marchand-vo/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">CRM pensé pour les achats d'un marchand VO</a>.
+          Pour un marchand qui démarre, c'est le premier des deux à mettre en place : sans achats, il n'y a pas de stock à
+          gérer.
+        </p>
+
+        <h3 class="mt-6 font-semibold text-text">Le contact des vendeurs, là où se perd le plus de temps</h3>
+        <p class="mt-2 leading-relaxed">
+          Un particulier qui vend sa voiture ne décroche pas un numéro inconnu, mais il lit un message court et rappelle
+          s'il a une raison de le faire. Sur Leboncoin, 47,9 % seulement des annonces de particuliers affichent un numéro
+          (données internes Auto-Prospect, même période) : pour plus de la moitié des vendeurs, la messagerie de la
+          plateforme est le seul canal. Le choix du canal et le texte du premier message sont détaillés dans notre article
+          sur
+          <a href="/blog/whatsapp-message-vocal-vendeurs-particuliers-voiture/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">WhatsApp, message vocal et messagerie pour contacter les vendeurs particuliers</a>,
+          et ce que la loi du 11 août 2026 autorise dans notre article sur
+          <a href="/blog/loi-11-aout-2026-demarchage-prospection-vendeurs-particuliers/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">le démarchage et les vendeurs particuliers</a>.
+        </p>
+      </section>
+
+      <!-- 5. Premier mois -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Le premier mois : une routine d'achat en six étapes
+        </h2>
+        <ol class="mt-5 space-y-3">
+          {
+            etapes.map((e, i) => (
+              <li class="rounded-xl border border-border bg-card p-5">
+                <p class="font-semibold text-text">{i + 1}. {e.nom}</p>
+                <p class="mt-2 text-sm leading-relaxed">{e.texte}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="mt-4 leading-relaxed">
+          Tenez cette routine un mois et notez vos chiffres : combien d'annonces contactées, combien de réponses, combien
+          de visites, combien d'achats. Ce sont ces trois taux, propres à votre segment et à votre zone, qui vous diront
+          combien de vendeurs il vous faut contacter pour acheter un véhicule.
+        </p>
+      </section>
+
+      <!-- CTA intermédiaire contextualisé -->
+      <aside class="rounded-2xl border border-accent/30 bg-gradient-to-b from-accent/10 to-transparent p-6 sm:p-8">
+        <p class="text-lg font-bold text-text">Les quatre outils d'achat, dans une seule plateforme</p>
+        <p class="mt-2 leading-relaxed">
+          Auto-Prospect détecte chaque jour les annonces de particuliers sur Leboncoin, AutoScout24 et La Centrale,
+          compare chaque annonce au marché et vous signale les pépites, contacte les vendeurs par messagerie Leboncoin,
+          WhatsApp ou message vocal, et range chaque échange dans votre CRM. Chaque vendeur contacté pour vous n'est
+          démarché pour aucun autre client.
+        </p>
+        <div class="mt-5">
+          <a
+            href={APP_LOGIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta="blog-devenir-marchand-automobile"
+            class="inline-block rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-bg shadow-lg shadow-accent/25 transition-all hover:bg-accent-hover hover:shadow-accent/40"
+          >
+            Essayer gratuitement pendant 5 jours
+          </a>
+        </div>
+      </aside>
+
+      <!-- FAQ -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">Questions fréquentes sur le métier de marchand automobile</h2>
+        <div class="mt-4">
+          {
+            faq.map((f) => (
+              <details class="group border-b border-border py-2">
+                <summary class="flex cursor-pointer items-center justify-between py-3 text-sm font-medium text-text sm:text-base [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <span class="ml-4 text-text-secondary transition-transform group-open:rotate-180">⌄</span>
+                </summary>
+                <p class="pb-4 text-sm leading-relaxed">{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Sources -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">Sources</h2>
+        <ul class="mt-3 list-disc space-y-1 pl-5 text-sm">
+          {
+            sources.map((s) => (
+              <li>
+                <a href={s.url} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">{s.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-3 text-xs">
+          Les démarches décrites ici résument les fiches officielles à la date de publication. Elles ne remplacent pas
+          l'avis de votre préfecture ou de votre expert-comptable avant la création de votre activité.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <SubPageCTA
+    title="Achetez vos premiers véhicules plus vite"
+    subtitle="Détection automatique, contact des vendeurs et CRM intégré, dès 69 € HT/mois. Essai gratuit 5 jours."
+  />
+  <Footer />
+  <CalendlyWidget />
+</Layout>

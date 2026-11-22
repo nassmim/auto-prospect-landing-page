@@ -28,6 +28,7 @@
 | `/blog/whatsapp-message-vocal-vendeurs-particuliers-voiture` | fond (MOFU) | contact automatique vendeurs (canaux de premier contact) → hub `/fonctionnalites/contact-vocal-automatique` | fr | 2026-10-11 (PR, non fusionnée) | 2026-10-11 | `/blog` | contact-multicanal, contact-vocal-automatique, article loi 11 août, article méthode, article CRM, hub pige, tarifs | brief `seo/briefs/2026-10-11-whatsapp-message-vocal-vendeurs-particuliers-voiture.md` |
 | `/blog/depot-vente-automobile-achat-revente-loi-2026` | fond (MOFU) | conformité prospection (dépôt-vente vs achat-revente) → hub `/solutions/mandataire-auto` | fr | 2026-11-10 (PR, non fusionnée) | 2026-11-10 | `/blog`, article loi 11 août (section dépôt-vente), `llms.txt` | article loi, article WhatsApp, analyse-prix, article stats, crm-pipeline-vente, article CRM, article méthode, solutions/mandataire-auto | brief `seo/briefs/2026-11-10-depot-vente-automobile-achat-revente-loi-2026.md` (lecture juridique prudente, relecture recommandée) |
 | `/blog/contacter-vendeurs-leboncoin-automatiquement` | fond (MOFU) | contact automatique vendeurs Leboncoin (+ La Centrale, AutoScout24) → hub `/fonctionnalites/contact-multicanal` | fr | 2026-11-08 (PR, non fusionnée) | 2026-11-08 | `/blog`, `llms.txt` | contact-multicanal, article WhatsApp, appels-entrants, crm (hub et article), article loi, article méthode, article stats, solutions/pige | brief `seo/briefs/2026-11-08-contacter-vendeurs-leboncoin-automatiquement.md` (canaux par marketplace à confirmer côté produit) |
+| `/blog/devenir-marchand-automobile` | fond (MOFU) | sourcing VO (devenir marchand, démarches et outils d'achat) → hub `/solutions/marchand-vehicules-occasion` | fr | 2026-11-22 (PR, non fusionnée) | 2026-11-22 | `/blog`, `llms.txt` | mandataire-auto, article dépôt-vente, alertdeals.fr, article stats, article méthode, solutions/pige, article CRM, article WhatsApp, article loi | brief `seo/briefs/2026-11-22-devenir-marchand-automobile.md` (délai de déclaration d'achat et garantie à relire sur Légifrance) |
 | `/conditions-utilisation`, `/confidentialite`, `/cookies` | légal | — | fr | 2025 | 2026-09 | footer | — | — |
 
 ## Hubs
@@ -40,6 +41,7 @@
 | `/fonctionnalites/recherche-annonces-automatisee` | prospection / sourcing | `/blog/prospection-automobile-methode` (PR) | lien retour du hub vers l'article, guide sourcing VO particuliers |
 | `/fonctionnalites/crm-pipeline-vente` | CRM automobile | `/blog/crm-automobile-marchand-vo` (PR) | lien retour du hub vers l'article ; aligner les étapes de la page hub sur celles de l'app (voir brief du 2026-09-27) |
 | `/solutions/mandataire-auto` | mandataire auto | — | guide outils mandataire |
+| `/solutions/marchand-vehicules-occasion` | sourcing VO | `/blog/devenir-marchand-automobile` (PR du 2026-11-22, lien retour du hub à poser) | guide sourcing VO auprès des particuliers (item-004) |
 
 ## Pages orphelines (0 lien entrant)
 
