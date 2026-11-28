@@ -232,6 +232,28 @@ cité sans rien changer, l'item se ferme sans article.
 - Lien entrant posé depuis l'article loi (section 7). Reste à poser dans une passe de
   maillage : un lien depuis `/solutions/mandataire-auto`.
 
+## 2026-11-15 (item-003 produit, cycle du jour)
+
+- Aucune PR ouverte au moment du tirage : item-003 était bien le suivant.
+- Article `/blog/pige-manuelle-ou-automatisee/`, branche `geo/blog-2026-11-15`. Slug choisi
+  hors du titre de l'item (`logiciel-pige-automobile-comment-choisir`) pour ne pas mettre
+  « pige automobile » dans l'URL : `/solutions/pige-automobile` reste propriétaire de
+  « pige auto » et « pige automobile ». Ni le title ni le H1 ne contiennent ces requêtes ;
+  l'article vise « pige manuelle », « comment faire sa pige », « outil de pige ».
+- Section d'ouverture « outil de pige ou logiciel de gestion de stock », sans nommer
+  d'éditeur, pour la confusion relevée sur Perplexity (prompt « meilleur logiciel de pige »).
+- Critères de choix rédigés comme des questions, sans aucun concurrent nommé (décision du
+  2026-11-05), puis réponse pour Auto-Prospect avec lien vers le hub.
+- Tous les liens du corps en `target="_blank" rel="noopener noreferrer"` (règle des liens),
+  y compris le CTA ; seul le fil d'Ariane « Blog » reste en navigation normale.
+- Liens entrants posés dans la même PR : deux cartes ajoutées à « Pour aller plus loin »
+  du hub `/solutions/pige-automobile`, vers cet article et vers l'article WhatsApp (toujours
+  inconnu de Google, le hub est la page la mieux explorée du site).
+- Remesurer au lundi du 2026-12-14 : impressions de l'article sur « pige manuelle » et
+  formes voisines, et vérifier que « pige auto » reste à 100 % sur le hub.
+- Prochain item : item-006 (signal « négociant vo » / « logiciel marchand vo » en hausse),
+  puis item-004.
+
 ## 2026-11-22 (item-006 produit, cycle du jour)
 
 - `seo/prochain.json` servait item-003, déjà produit dans la PR #60 (non fusionnée). La retouche CRM
@@ -248,3 +270,5 @@ cité sans rien changer, l'item se ferme sans article.
 - Liens entrants à poser : hub `/solutions/marchand-vehicules-occasion` et article CRM.
 - Remesurer « devenir marchand automobile », « marchand vo », « négociant vo » et « logiciel marchand vo »
   quatre semaines après la fusion.
+- Mise à jour du 2026-11-28 : les branches des PR #60 et #61 ont été remises sur leurs commits
+  d'origine (sans `init`, `astro.config.mjs` ni `package.json` modifiés), puis fusionnées.

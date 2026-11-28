@@ -1,0 +1,501 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import CalendlyWidget from "../../components/CalendlyWidget.astro";
+import SubPageCTA from "../../components/SubPageCTA.astro";
+import { APP_LOGIN_URL } from "../../lib/api";
+import "../../styles/global.css";
+
+const title =
+  "Pige manuelle ou automatisée : comment organiser sa pige, étape par étape | Auto-Prospect";
+const description =
+  "Comment faire sa pige à la main sur Leboncoin, AutoScout24 et La Centrale, où la méthode manuelle casse, ce qu'un outil de pige automatise vraiment et les critères pour le choisir, sans le confondre avec un logiciel de gestion de stock.";
+
+const datePublished = "2026-11-15";
+const dateModified = "2026-11-15";
+
+const siteOrigin = Astro.site?.origin ?? "https://auto-prospect.fr";
+const canonical = `${siteOrigin}/blog/pige-manuelle-ou-automatisee/`;
+
+const lien = "text-accent hover:underline";
+
+// Étapes de la pige manuelle : chaque étape est aussi un HowToStep dans le JSON-LD.
+const etapes = [
+  {
+    nom: "Fixer les recherches à suivre",
+    texte:
+      "Une recherche par segment que vous savez revendre : marque ou modèle, fourchette d'années, kilométrage plafond, prix d'achat maximal, départements où vous vous déplacez.",
+  },
+  {
+    nom: "Créer une alerte par recherche et par plateforme",
+    texte:
+      "Leboncoin, AutoScout24 et La Centrale permettent chacune d'enregistrer une recherche et d'être prévenu des nouvelles annonces. Dix recherches sur trois plateformes, ce sont trente alertes à tenir.",
+  },
+  {
+    nom: "Ouvrir et trier les annonces plusieurs fois par jour",
+    texte:
+      "Écarter les annonces de professionnels, les doublons publiés sur plusieurs plateformes et les véhicules hors périmètre. C'est l'étape qui consomme le plus de temps, pour un résultat nul la plupart du temps.",
+  },
+  {
+    nom: "Comparer chaque annonce retenue au marché",
+    texte:
+      "Même modèle, motorisation, kilométrage proche, même région. Seules les annonces sous le marché, ou dont le prix vient de baisser, méritent un contact immédiat.",
+  },
+  {
+    nom: "Contacter le vendeur sur le bon canal",
+    texte:
+      "Messagerie de la plateforme par défaut, WhatsApp ou message vocal sur répondeur quand l'annonce affiche un numéro. Un message court qui dit qui vous êtes et ce que vous proposez.",
+  },
+  {
+    nom: "Noter et relancer",
+    texte:
+      "Chaque vendeur contacté, le canal, la date, la réponse. Relance à 48 heures, puis une semaine plus tard si l'annonce est toujours en ligne. Sans cette trace, les rappels se perdent.",
+  },
+];
+
+// Pige manuelle et pige automatisée, étape par étape.
+const comparaison = [
+  {
+    etape: "Surveillance des annonces",
+    manuel: "Une alerte par recherche et par plateforme, à ouvrir vous-même",
+    auto: "Détection automatique sur les trois plateformes, chaque jour, selon vos critères",
+  },
+  {
+    etape: "Tri",
+    manuel: "À l'œil, annonce par annonce",
+    auto: "Annonces hors critères écartées ; les pépites, celles qui ressortent du lot, vous sont signalées",
+  },
+  {
+    etape: "Comparaison au marché",
+    manuel: "Recherche d'annonces équivalentes pour chaque véhicule",
+    auto: "Position par rapport au marché affichée sur chaque annonce",
+  },
+  {
+    etape: "Premier message",
+    manuel: "Écrit ou copié-collé, un par vendeur",
+    auto: "Envoyé automatiquement par messagerie Leboncoin, WhatsApp ou vocal sur répondeur",
+  },
+  {
+    etape: "Rappel du vendeur",
+    manuel: "Numéro inconnu, annonce à retrouver pendant qu'il parle",
+    auto: "Véhicule annoncé avant de décrocher, appel affiché avec l'annonce",
+  },
+  {
+    etape: "Suivi et relances",
+    manuel: "Tableur mis à jour à la main",
+    auto: "CRM alimenté à chaque contact, relances suivies par étape",
+  },
+  {
+    etape: "Visite, expertise, négociation",
+    manuel: "Vous",
+    auto: "Vous",
+  },
+];
+
+const criteres = [
+  {
+    titre: "Les plateformes couvertes",
+    texte:
+      "Leboncoin concentre l'essentiel des annonces de particuliers, mais un outil qui ignore AutoScout24 et La Centrale vous laisse refaire une partie de la pige à la main. Demandez la liste exacte, et si les annonces de professionnels sont écartées.",
+  },
+  {
+    titre: "Ce que l'outil fait après la détection",
+    texte:
+      "C'est la vraie ligne de partage. Certains outils s'arrêtent à la liste d'annonces : le contact, le premier message et les relances restent à votre charge, et ce sont les étapes les plus longues. D'autres contactent le vendeur pour vous. Comparez sur ce point avant de comparer les prix.",
+  },
+  {
+    titre: "L'exclusivité des vendeurs contactés",
+    texte:
+      "Si tous les abonnés d'un même outil reçoivent la même annonce au même moment, le vendeur d'une bonne affaire reçoit dix sollicitations dans la journée et ne répond plus. Posez la question : un vendeur contacté pour vous peut-il l'être pour un autre client ?",
+  },
+  {
+    titre: "Le tri et l'analyse de prix",
+    texte:
+      "Un flux de deux cents annonces par jour n'est pas une pige, c'est une boîte de réception. L'outil doit vous dire quelles annonces sont sous le marché et lesquelles ressortent, pour que vous commenciez par elles.",
+  },
+  {
+    titre: "Le suivi des vendeurs",
+    texte:
+      "Un outil de pige sans suivi vous renvoie au tableur. Vérifiez que chaque contact, chaque réponse et chaque rappel sont rattachés à l'annonce, et que plusieurs personnes peuvent travailler sur le même pipeline.",
+  },
+  {
+    titre: "Le prix réel",
+    texte:
+      "Regardez ce qui est facturé en plus de l'abonnement : zones ou départements supplémentaires, nombre de recherches, messages envoyés, utilisateurs. Un essai gratuit sur vos propres recherches vaut mieux que n'importe quelle démonstration.",
+  },
+];
+
+const faq = [
+  {
+    q: "Comment faire sa pige automobile à la main ?",
+    a: "En six étapes : fixer les recherches à suivre (modèle, années, kilométrage, prix, zones), créer une alerte par recherche sur Leboncoin, AutoScout24 et La Centrale, trier les annonces plusieurs fois par jour, comparer chaque annonce retenue au marché, contacter le vendeur sur le bon canal, puis noter chaque contact et relancer. La méthode fonctionne mais devient intenable au-delà de quelques recherches.",
+  },
+  {
+    q: "Quelle différence entre un outil de pige et un logiciel de gestion de stock VO ?",
+    a: "Un outil de pige sert à acheter : il repère les véhicules mis en vente par des particuliers et aide à contacter leurs vendeurs. Un logiciel de gestion de stock sert à vendre : il gère le parc déjà acheté, les fiches véhicules, la diffusion des annonces sur les marketplaces et les acheteurs. Les deux se complètent, mais aucun ne remplace l'autre.",
+  },
+  {
+    q: "Combien de temps prend une pige manuelle ?",
+    a: "Le temps dépend du nombre de recherches et de zones suivies. Ouvrir les alertes de trois plateformes plusieurs fois par jour, trier, comparer au marché, écrire à chaque vendeur et tenir le tableur occupe facilement une demi-journée par jour à un opérateur qui suit une dizaine de recherches, avant le premier rendez-vous.",
+  },
+  {
+    q: "Qu'est-ce qu'un outil de pige automatisée prend en charge ?",
+    a: "Les étapes répétitives : la détection des annonces selon vos critères sur les trois plateformes, le tri, la comparaison au marché, l'envoi du premier message et des relances, et le suivi des vendeurs dans un CRM. La visite, l'expertise du véhicule et la négociation restent à votre main.",
+  },
+  {
+    q: "La pige manuelle a-t-elle encore un intérêt ?",
+    a: "Oui, si vous suivez un petit nombre de recherches très précises, sur une zone restreinte, ou un modèle rare dont vous connaissez chaque annonce. Elle reste aussi la meilleure façon d'apprendre un segment avant de l'automatiser. Au-delà de quelques recherches sur plusieurs plateformes, le temps passé à surveiller et à écrire dépasse le temps passé à acheter.",
+  },
+  {
+    q: "Peut-on contacter un vendeur particulier trouvé en pige depuis la loi du 11 août 2026 ?",
+    a: "Répondre à une annonce publiée par un particulier pour lui proposer d'acheter son véhicule n'est pas du démarchage au sens de cette loi : c'est le vendeur qui a sollicité les acheteurs en publiant. Proposer un autre service, comme un mandat de vente, relève d'une autre logique. Le détail est dans notre article sur la loi du 11 août 2026.",
+  },
+];
+
+const sources = [
+  {
+    label: "AAA Data, « Marché automobile français 2025 : les grandes tendances » (juin 2026)",
+    url: "https://www.aaa-data.fr/actualites/marche-automobile-francais-2025-grandes-tendances/",
+  },
+  {
+    label: "Auto-Prospect, « 16 statistiques sur les annonces de voitures d'occasion de particuliers en 2026 »",
+    url: "https://auto-prospect.fr/blog/statistiques-annonces-voitures-occasion-particuliers-2026/",
+  },
+];
+
+const jsonLd = [
+  {
+    "@type": "BlogPosting",
+    "headline": "Pige manuelle ou automatisée : comment organiser sa pige, étape par étape",
+    "description": description,
+    "url": canonical,
+    "mainEntityOfPage": canonical,
+    "datePublished": datePublished,
+    "dateModified": dateModified,
+    "inLanguage": "fr-FR",
+    "author": { "@type": "Organization", "name": "L'équipe Auto-Prospect", "url": siteOrigin },
+    "publisher": { "@type": "Organization", "name": "Auto-Prospect", "url": siteOrigin, "logo": `${siteOrigin}/logo.svg` },
+  },
+  {
+    "@type": "HowTo",
+    "name": "Comment faire sa pige automobile à la main",
+    "step": etapes.map((e, i) => ({
+      "@type": "HowToStep",
+      "position": i + 1,
+      "name": e.nom,
+      "text": e.texte,
+    })),
+  },
+  {
+    "@type": "FAQPage",
+    "mainEntity": faq.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a },
+    })),
+  },
+  {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": `${siteOrigin}/` },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${siteOrigin}/blog/` },
+      { "@type": "ListItem", "position": 3, "name": "Pige manuelle ou automatisée", "item": canonical },
+    ],
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <Navbar />
+  <main class="mx-auto max-w-3xl px-4 pt-32 pb-20 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-widest text-accent">
+      <a href="/blog/" class="text-text-secondary transition-colors hover:text-text">Blog</a>
+      <span class="text-text-secondary"> / </span>Méthode
+    </p>
+    <h1 class="mt-3 text-3xl font-bold sm:text-4xl">
+      Pige manuelle ou automatisée : comment organiser sa pige, étape par étape
+    </h1>
+    <p class="mt-4 text-sm text-text-secondary">
+      Par <span class="font-semibold text-text">L'équipe Auto-Prospect</span>. Publié le 15 novembre 2026.
+    </p>
+
+    <div class="mt-8 rounded-2xl border border-border bg-card p-6">
+      <p class="text-sm font-semibold">La réponse courte</p>
+      <p class="mt-2 text-sm leading-relaxed text-text-secondary">
+        Une pige manuelle tient en six étapes : fixer ses recherches, poser une alerte par recherche sur Leboncoin,
+        AutoScout24 et La Centrale, trier, comparer au marché, contacter le vendeur, noter et relancer. Elle fonctionne
+        pour quelques recherches. Au-delà, le tri et l'écriture des messages mangent la journée. Un outil de pige
+        automatisée prend ces étapes répétitives ; le critère qui compte pour le choisir est ce qu'il fait
+        <strong class="text-text">après</strong> la détection : contacter les vendeurs ou seulement vous les montrer.
+      </p>
+    </div>
+
+    <div class="mt-10 space-y-12 text-text-secondary">
+      <!-- 1. Pige vs gestion de stock -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Outil de pige ou logiciel de gestion de stock : de quoi parle-t-on ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          La confusion est fréquente, y compris dans les réponses des assistants IA : on demande un logiciel de pige, on
+          obtient un logiciel de gestion de stock. Ce sont deux outils qui travaillent aux deux bouts opposés de votre
+          activité.
+        </p>
+        <ul class="mt-4 list-disc space-y-2 pl-5 leading-relaxed">
+          <li>
+            <strong class="text-text">La pige sert à acheter.</strong> Elle repère les véhicules mis en vente par des
+            particuliers sur les marketplaces, pour que vous contactiez le vendeur avant les autres professionnels.
+          </li>
+          <li>
+            <strong class="text-text">La gestion de stock sert à vendre.</strong> Elle gère les véhicules déjà achetés :
+            fiches, photos, frais de remise en état, diffusion des annonces sur les marketplaces, demandes des acheteurs.
+          </li>
+        </ul>
+        <p class="mt-3 leading-relaxed">
+          Un marchand VO a souvent besoin des deux. Mais un logiciel de gestion de stock ne vous apportera aucun vendeur,
+          et un outil de pige ne publiera aucune annonce. Ce guide parle uniquement du premier : trouver des véhicules à
+          acheter chez les particuliers et joindre leurs vendeurs.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Le gisement justifie l'effort. Selon AAA Data, le marché français de l'occasion a compté 5,4 millions de
+          transactions en 2025, et les véhicules de plus de cinq ans s'échangent à 55 % entre particuliers. Pour les
+          chiffres des annonces elles-mêmes (prix, kilométrage, part des bonnes affaires), voir nos
+          <a href="/blog/statistiques-annonces-voitures-occasion-particuliers-2026/" target="_blank" rel="noopener noreferrer" class={lien}>16 statistiques sur les annonces de particuliers en 2026</a>.
+        </p>
+      </section>
+
+      <!-- 2. Pige manuelle -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Comment faire sa pige à la main, étape par étape ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Voici la méthode qu'appliquent les marchands et mandataires qui pigent sans outil. Elle est gratuite, et c'est
+          la meilleure façon d'apprendre un segment.
+        </p>
+        <ol class="mt-5 space-y-3">
+          {
+            etapes.map((e, i) => (
+              <li class="rounded-xl border border-border bg-card p-5">
+                <p class="font-semibold text-text">{i + 1}. {e.nom}</p>
+                <p class="mt-2 text-sm leading-relaxed">{e.texte}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="mt-5 leading-relaxed">
+          Pour le détail de chaque étape, en particulier le premier message et les relances, la méthode complète est
+          dans notre article sur
+          <a href="/blog/prospection-automobile-methode/" target="_blank" rel="noopener noreferrer" class={lien}>la prospection automobile auprès des vendeurs particuliers</a>.
+          Le choix du canal (messagerie de la plateforme, WhatsApp, message vocal sur répondeur) a son propre guide :
+          <a href="/blog/whatsapp-message-vocal-vendeurs-particuliers-voiture/" target="_blank" rel="noopener noreferrer" class={lien}>WhatsApp et message vocal pour contacter les vendeurs particuliers</a>.
+        </p>
+      </section>
+
+      <!-- 3. Limites -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Où la pige manuelle casse-t-elle ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          La méthode ne casse pas d'un coup. Elle se dégrade à mesure que vous ajoutez des recherches, des zones et des
+          plateformes. Cinq points lâchent en premier.
+        </p>
+        <h3 class="mt-6 font-semibold text-text">Le temps de tri</h3>
+        <p class="mt-2 leading-relaxed">
+          Dix recherches sur trois plateformes produisent des dizaines d'annonces par jour, dont une petite partie
+          seulement mérite un contact. Les ouvrir, écarter les professionnels, repérer les doublons publiés sur deux
+          plateformes : tout ce travail ne produit aucun achat, et il revient plusieurs fois par jour.
+        </p>
+        <h3 class="mt-6 font-semibold text-text">Les baisses de prix</h3>
+        <p class="mt-2 leading-relaxed">
+          Une annonce écartée lundi parce qu'elle était trop chère peut devenir intéressante jeudi. Sur les 35 122
+          annonces de particuliers que nous avons relevées entre juin et septembre 2026, 9,9 % ont baissé leur prix
+          pendant leur diffusion, et 23,9 % pour les véhicules de 2022 et plus (données internes Auto-Prospect). Une
+          alerte de nouvelle annonce ne vous prévient pas de ces baisses : il faut revenir voir.
+        </p>
+        <h3 class="mt-6 font-semibold text-text">L'écriture des messages</h3>
+        <p class="mt-2 leading-relaxed">
+          Sur Leboncoin, moins d'une annonce de particulier sur deux (47,9 %) affiche un numéro de téléphone, selon les
+          mêmes données. Pour la majorité des vendeurs, le premier contact passe donc par la messagerie de la plateforme,
+          un message à la fois. Comment s'y prendre est expliqué dans notre guide pour
+          <a href="/blog/contacter-vendeurs-leboncoin-automatiquement/" target="_blank" rel="noopener noreferrer" class={lien}>contacter automatiquement les vendeurs sur Leboncoin</a>.
+        </p>
+        <h3 class="mt-6 font-semibold text-text">Le rappel du vendeur</h3>
+        <p class="mt-2 leading-relaxed">
+          Quand le vendeur rappelle, c'est d'un numéro que vous ne connaissez pas, au milieu d'une autre tâche. Retrouver
+          de quelle annonce il s'agit pendant qu'il parle est le moment où se perdent le plus d'affaires, comme nous le
+          détaillons dans
+          <a href="/blog/rappel-vendeur-particulier-identifier-annonce/" target="_blank" rel="noopener noreferrer" class={lien}>l'article sur l'identification de l'annonce au rappel</a>.
+        </p>
+        <h3 class="mt-6 font-semibold text-text">Le suivi</h3>
+        <p class="mt-2 leading-relaxed">
+          Le tableur tient tant que vous êtes seul et que le volume reste faible. Passé une trentaine de contacts par
+          semaine, ou dès que deux personnes pigent, les relances se perdent et deux collègues écrivent au même vendeur.
+          Notre
+          <a href="/blog/crm-automobile-marchand-vo/" target="_blank" rel="noopener noreferrer" class={lien}>guide du CRM automobile pour marchand VO</a>
+          décrit le pipeline qui prend le relais.
+        </p>
+      </section>
+
+      <!-- 4. Comparaison -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Pige manuelle ou automatisée : qu'est-ce qui change, étape par étape ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          L'automatisation ne change pas la méthode. Elle change qui exécute chaque étape. Le tableau ci-dessous
+          reprend les étapes de la pige telles qu'Auto-Prospect les prend en charge.
+        </p>
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full border-collapse text-left text-sm">
+            <thead>
+              <tr class="border-b border-border">
+                <th class="py-3 pr-4 font-medium">Étape</th>
+                <th class="py-3 pr-4 font-medium">Pige manuelle</th>
+                <th class="py-3 font-medium">Pige automatisée</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+              {
+                comparaison.map((c) => (
+                  <tr>
+                    <td class="py-3 pr-4 font-medium text-text">{c.etape}</td>
+                    <td class="py-3 pr-4">{c.manuel}</td>
+                    <td class="py-3">{c.auto}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-4 leading-relaxed">
+          La dernière ligne compte autant que les autres : un outil de pige vous rend du temps pour la visite, l'expertise
+          et la négociation, qui sont les seuls endroits où l'achat se décide. Il ne les fait pas à votre place.
+        </p>
+      </section>
+
+      <!-- CTA intermédiaire contextualisé -->
+      <aside class="rounded-2xl border border-accent/30 bg-gradient-to-b from-accent/10 to-transparent p-6 sm:p-8">
+        <p class="text-lg font-bold text-text">Gardez la méthode, déléguez les étapes répétitives</p>
+        <p class="mt-2 leading-relaxed">
+          Auto-Prospect détecte les annonces de particuliers sur Leboncoin, AutoScout24 et La Centrale, vous signale les
+          pépites, compare chaque annonce au marché, contacte les vendeurs par messagerie Leboncoin, WhatsApp ou message
+          vocal, et alimente votre CRM. Chaque vendeur contacté pour vous n'est démarché pour aucun autre client.
+        </p>
+        <div class="mt-5">
+          <a
+            href={APP_LOGIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta="blog-pige-manuelle-ou-automatisee"
+            class="inline-block rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-bg shadow-lg shadow-accent/25 transition-all hover:bg-accent-hover hover:shadow-accent/40"
+          >
+            Essayer gratuitement pendant 5 jours
+          </a>
+        </div>
+      </aside>
+
+      <!-- 5. Critères de choix -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Comment choisir un outil de pige automatisée ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Six questions à poser à n'importe quel outil avant de vous abonner, y compris au nôtre.
+        </p>
+        <div class="mt-5 space-y-3">
+          {
+            criteres.map((c) => (
+              <div class="rounded-xl border border-border bg-card p-5">
+                <p class="font-semibold text-text">{c.titre}</p>
+                <p class="mt-2 text-sm leading-relaxed">{c.texte}</p>
+              </div>
+            ))
+          }
+        </div>
+        <p class="mt-5 leading-relaxed">
+          Pour ce qui concerne Auto-Prospect : les trois plateformes sont couvertes, sans limite de zone ; les vendeurs
+          sont
+          <a href="/fonctionnalites/contact-multicanal/" target="_blank" rel="noopener noreferrer" class={lien}>contactés automatiquement</a>
+          et restent exclusifs ; chaque annonce passe par
+          l'<a href="/fonctionnalites/analyse-prix-marche/" target="_blank" rel="noopener noreferrer" class={lien}>analyse prix vs marché</a> ;
+          les rappels sont des
+          <a href="/fonctionnalites/appels-entrants-identifies/" target="_blank" rel="noopener noreferrer" class={lien}>appels entrants identifiés</a> ;
+          le suivi se fait dans un
+          <a href="/fonctionnalites/crm-pipeline-vente/" target="_blank" rel="noopener noreferrer" class={lien}>CRM Kanban intégré</a>.
+          Le tout pour 69 € HT par mois en facturation annuelle, ou 89 € HT sans engagement, messages vocaux en option
+          (<a href="/tarifs/" target="_blank" rel="noopener noreferrer" class={lien}>détail des tarifs</a>). La présentation complète
+          est sur notre page
+          <a href="/solutions/pige-automobile/" target="_blank" rel="noopener noreferrer" class={lien}>pige automobile automatisée</a>.
+        </p>
+      </section>
+
+      <!-- 6. Quand rester manuel -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">
+          Quand la pige manuelle reste-t-elle le bon choix ?
+        </h2>
+        <p class="mt-3 leading-relaxed">
+          Un outil n'a pas d'intérêt pour tout le monde. La pige à la main reste raisonnable si vous suivez deux ou trois
+          recherches très précises sur une zone restreinte, si vous travaillez un modèle rare dont vous connaissez chaque
+          annonce, ou si vous achetez quelques véhicules par mois en complément d'une autre activité. Elle est aussi le
+          bon point de départ sur un nouveau segment : quelques semaines à la main vous apprennent les prix, les
+          vendeurs et les pièges avant d'automatiser.
+        </p>
+        <p class="mt-3 leading-relaxed">
+          Le signal de bascule est simple : quand le temps passé à surveiller et à écrire dépasse le temps passé en
+          rendez-vous, ou quand vous arrivez régulièrement après un concurrent sur les meilleures annonces. Côté
+          réglementation, rien ne change entre les deux modes : répondre à l'annonce d'un particulier pour lui proposer
+          d'acheter reste licite, comme l'explique notre article sur
+          <a href="/blog/loi-11-aout-2026-demarchage-prospection-vendeurs-particuliers/" target="_blank" rel="noopener noreferrer" class={lien}>la loi du 11 août 2026 et les vendeurs particuliers</a>.
+        </p>
+      </section>
+
+      <!-- FAQ -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">Questions fréquentes sur la pige manuelle et automatisée</h2>
+        <div class="mt-4">
+          {
+            faq.map((f) => (
+              <details class="group border-b border-border py-2">
+                <summary class="flex cursor-pointer items-center justify-between py-3 text-sm font-medium text-text sm:text-base [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <span class="ml-4 text-text-secondary transition-transform group-open:rotate-180">⌄</span>
+                </summary>
+                <p class="pb-4 text-sm leading-relaxed">{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Sources -->
+      <section>
+        <h2 class="text-xl font-semibold text-text">Sources</h2>
+        <ul class="mt-3 list-disc space-y-1 pl-5 text-sm">
+          {
+            sources.map((s) => (
+              <li>
+                <a href={s.url} target="_blank" rel="noopener noreferrer" class={lien}>{s.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-3 text-xs">
+          Chiffres sur les baisses de prix et les numéros affichés : données internes Auto-Prospect, 35 122 annonces de
+          particuliers, 1er juin au 25 septembre 2026. Les estimations de temps proviennent de l'usage quotidien
+          d'Auto-Prospect par des marchands et mandataires ; elles ne constituent pas une statistique de marché.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <SubPageCTA
+    title="Passez de la pige manuelle à la pige automatisée"
+    subtitle="Détection automatique, contact des vendeurs et CRM intégré, dès 69 € HT/mois. Essai gratuit 5 jours."
+  />
+  <Footer />
+  <CalendlyWidget />
+</Layout>

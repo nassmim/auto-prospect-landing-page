@@ -29,6 +29,14 @@ export const articles: Article[] = [
     datePublished: "2026-11-22",
   },
   {
+    slug: "pige-manuelle-ou-automatisee",
+    title: "Pige manuelle ou automatisée : comment organiser sa pige, étape par étape",
+    description:
+      "Les six étapes d'une pige faite à la main sur Leboncoin, AutoScout24 et La Centrale, les cinq points où elle casse, ce qu'un outil de pige automatise vraiment et six critères pour le choisir, sans le confondre avec un logiciel de gestion de stock.",
+    category: "Méthode",
+    datePublished: "2026-11-15",
+  },
+  {
     slug: "depot-vente-automobile-achat-revente-loi-2026",
     title: "Dépôt-vente ou achat-revente : comment contacter un vendeur particulier depuis la loi de 2026",
     description:
