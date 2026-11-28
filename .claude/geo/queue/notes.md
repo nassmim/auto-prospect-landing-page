@@ -254,3 +254,21 @@ cité sans rien changer, l'item se ferme sans article.
 - Prochain item : item-006 (signal « négociant vo » / « logiciel marchand vo » en hausse),
   puis item-004.
 
+## 2026-11-22 (item-006 produit, cycle du jour)
+
+- `seo/prochain.json` servait item-003, déjà produit dans la PR #60 (non fusionnée). La retouche CRM
+  (agent-2026-47-refresh-001) n'existe que dans la PR #61, non fusionnée. Item servi : item-006, le suivant
+  ouvert sur main.
+- Les PR #60 et #61 contiennent, en plus de leur contenu éditorial, des modifications étrangères à
+  la production : un fichier `init`, du code obfusqué ajouté en fin de ligne dans `astro.config.mjs`,
+  et les scripts `build` et `dev` de `package.json` qui lancent `node init`. Ne pas les fusionner en
+  l'état. Avant tout nouveau commit, vérifier `git diff --stat` et ne jamais committer ces trois fichiers
+  depuis une session de contenu.
+- Article `/blog/devenir-marchand-automobile/`, angle démarches puis outils d'achat. Marge et rotation non
+  traitées (AlertDeals). H3 « outil d'achat ou logiciel de gestion de stock » pour la confusion que font
+  les IA sur « logiciel marchand VO », sans nommer d'éditeur.
+- Liens entrants à poser : hub `/solutions/marchand-vehicules-occasion` et article CRM.
+- Remesurer « devenir marchand automobile », « marchand vo », « négociant vo » et « logiciel marchand vo »
+  quatre semaines après la fusion.
+- Mise à jour du 2026-11-28 : les branches des PR #60 et #61 ont été remises sur leurs commits
+  d'origine (sans `init`, `astro.config.mjs` ni `package.json` modifiés), puis fusionnées.

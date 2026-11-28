@@ -21,6 +21,14 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "devenir-marchand-automobile",
+    title: "Devenir marchand automobile : démarches, outils et premiers achats auprès des particuliers",
+    description:
+      "Déclaration en préfecture, registre de police, W garage, déclaration d'achat, TVA sur la marge : les démarches pour devenir marchand automobile, puis les quatre outils qui permettent de trouver ses premiers véhicules chez les particuliers.",
+    category: "Guide",
+    datePublished: "2026-11-22",
+  },
+  {
     slug: "pige-manuelle-ou-automatisee",
     title: "Pige manuelle ou automatisée : comment organiser sa pige, étape par étape",
     description:
